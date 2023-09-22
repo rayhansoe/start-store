@@ -250,7 +250,7 @@ export default function ProductPage() {
 	const data = useRouteData<typeof routeData>();
 
 	return (
-		<Suspense fallback={<h1>Loading...</h1>}>
+		// <Suspense fallback={<h1>Loading...</h1>}>
 			<Show when={data()}>
 				{(product) => (
 					<div class='mx-auto max-w-screen-2xl px-4'>
@@ -278,6 +278,6 @@ export default function ProductPage() {
 					</div>
 				)}
 			</Show>
-		</Suspense>
+		// </Suspense>
 	);
 }

@@ -89,7 +89,7 @@ export default function Home() {
 	const data = useRouteData<typeof routeData>();
 	return (
 		<>
-			<Suspense fallback={<h1>Loading...</h1>}>
+			{/* <Suspense fallback={<h1>Loading...</h1>}> */}
 				<Show when={data()}>
 					{(products) => (
 						<>
@@ -102,7 +102,7 @@ export default function Home() {
 						</>
 					)}
 				</Show>
-			</Suspense>
+			{/* </Suspense> */}
 			{/* <Suspense>
 				<Suspense>
 					<Footer />
