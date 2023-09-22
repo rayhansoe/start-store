@@ -206,11 +206,11 @@ export function VariantSelector(props: {
 			<Index each={options()}>
 				{(option) => (
 					<dl class='mb-8'>
-						<dt class='mb-4 text-sm uppercase tracking-wide'>{option.name}</dt>
+						<dt class='mb-4 text-sm uppercase tracking-wide'>{option().name}</dt>
 						<dd class='flex flex-wrap gap-3'>
 							<Index each={option().values}>
 								{(value) => {
-									const optionNameLowerCase = () => option.name.toLowerCase();
+									const optionNameLowerCase = () => option().name.toLowerCase();
 									const optionSearchParams = () =>
 										new URLSearchParams({
 											...searchParams,
@@ -285,7 +285,7 @@ export function VariantSelector(props: {
 											<A
 												aria-disabled={!isAvailableForSale()}
 												href={optionUrl()}
-												title={`${option.name} ${value()}${
+												title={`${option().name} ${value()}${
 													!isAvailableForSale() ? ' (Out of Stock)' : ''
 												}`}
 												class={clsx(
