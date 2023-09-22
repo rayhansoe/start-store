@@ -250,14 +250,14 @@ export default function ProductPage() {
 	const data = useRouteData<typeof routeData>();
 
 	return (
-		// <Suspense fallback={<h1>Loading...</h1>}>
+		<Suspense fallback={<h1>Loading...</h1>}>
 			<Show when={data()}>
 				{(product) => (
 					<div class='mx-auto max-w-screen-2xl px-4'>
 						<div class='flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row'>
 							<div class='h-full w-full basis-full lg:basis-4/6'>
 								<Gallery
-									images={product().images?.map(
+									images={product()?.images?.map(
 										(image: { id: string; url: string; altText: string }) => ({
 											src: image.url,
 											altText: image.altText,
@@ -278,6 +278,6 @@ export default function ProductPage() {
 					</div>
 				)}
 			</Show>
-		// </Suspense>
+		</Suspense>
 	);
 }

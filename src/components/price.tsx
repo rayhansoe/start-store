@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { mergeProps } from 'solid-js';
+import { Show, mergeProps } from 'solid-js';
 
 const Price = (props: {
 	amount: string;
@@ -7,7 +7,8 @@ const Price = (props: {
 	currencyCode: string;
 	currencyCodeClass?: string;
 }) => {
-  const merged = mergeProps({ currencyCode: "USD" }, props);
+	const derived = () => props;
+	const merged = mergeProps({ currencyCode: 'USD' }, derived());
 	const price = () =>
 		`${new Intl.NumberFormat(undefined, {
 			style: 'currency',
@@ -15,12 +16,14 @@ const Price = (props: {
 			currencyDisplay: 'narrowSymbol',
 		}).format(parseFloat(merged.amount))}`;
 	return (
-		<p class={merged.class}>
-			{price()}
-			<span
-				class={clsx('ml-1 inline', merged.currencyCodeClass)}
-			>{`${merged.currencyCode}`}</span>
-		</p>
+		<Show when={price() && merged.currencyCode}>
+			<p class={merged.class}>
+				{price()}
+				<span
+					class={clsx('ml-1 inline', merged.currencyCodeClass)}
+				>{`${merged.currencyCode}`}</span>
+			</p>
+		</Show>
 	);
 };
 

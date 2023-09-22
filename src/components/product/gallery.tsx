@@ -13,11 +13,11 @@ export function Gallery(props: {
 }) {
 	const location = useLocation();
 	const [searchParams] = useSearchParams();
-	const imageSearchParam = () => searchParams.image;
+	const imageSearchParam = () => searchParams?.image;
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
-	const imagesLength = () => props.images.length;
+	const imagesLength = () => props.images?.length;
 
 	const nextImageIndex = () =>
 		imageIndex() + 1 < imagesLength() ? imageIndex() + 1 : 0;
@@ -31,7 +31,10 @@ export function Gallery(props: {
 		imageIndex() === 0 ? imagesLength() - 1 : imageIndex() - 1;
 
 	const previousSearchParams = () =>
-		new URLSearchParams({ ...searchParams, image: previousImageIndex().toString() });
+		new URLSearchParams({
+			...searchParams,
+			image: previousImageIndex().toString(),
+		});
 
 	const previousUrl = () => createUrl(location.pathname, previousSearchParams());
 
@@ -40,45 +43,47 @@ export function Gallery(props: {
 
 	return (
 		<>
-			<div class='relative aspect-square h-full max-h-[550px] w-full overflow-hidden'>
-				{props.images[imageIndex()] && (
-					<img
-						class='h-full w-full object-contain'
-						// fill
-						sizes='(min-width: 1024px) 66vw, 100vw'
-						alt={props.images[imageIndex()].altText as string}
-						src={props.images[imageIndex()].src as string}
-						// priority={true}
-						loading='eager'
-					/>
-				)}
+			<Show when={props?.images}>
+				<div class='relative aspect-square h-full max-h-[550px] w-full overflow-hidden'>
+					{props?.images[imageIndex()] && (
+						<img
+							class='h-full w-full object-contain'
+							// fill
+							sizes='(min-width: 1024px) 66vw, 100vw'
+							alt={props.images[imageIndex()]?.altText as string}
+							src={props.images[imageIndex()]?.src as string}
+							// priority={true}
+							loading='eager'
+						/>
+					)}
 
-				<Show when={imagesLength() > 1}>
-					<div class='absolute bottom-[15%] flex w-full justify-center'>
-						<div class='mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80'>
-							<A
-								aria-label='Previous product image'
-								href={previousUrl()}
-								class={buttonClass}
-								noScroll
-								// scroll={false}
-							>
-								<Icon path={arrowLeft} class='h-5' />
-							</A>
-							<div class='mx-1 h-6 w-px bg-neutral-500' />
-							<A
-								aria-label='Next product image'
-								href={nextUrl()}
-								class={buttonClass}
-								noScroll
-								// scroll={false}
-							>
-								<Icon path={arrowRight} class='h-5' />
-							</A>
+					<Show when={imagesLength() > 1}>
+						<div class='absolute bottom-[15%] flex w-full justify-center'>
+							<div class='mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80'>
+								<A
+									aria-label='Previous product image'
+									href={previousUrl()}
+									class={buttonClass}
+									noScroll
+									// scroll={false}
+								>
+									<Icon path={arrowLeft} class='h-5' />
+								</A>
+								<div class='mx-1 h-6 w-px bg-neutral-500' />
+								<A
+									aria-label='Next product image'
+									href={nextUrl()}
+									class={buttonClass}
+									noScroll
+									// scroll={false}
+								>
+									<Icon path={arrowRight} class='h-5' />
+								</A>
+							</div>
 						</div>
-					</div>
-				</Show>
-			</div>
+					</Show>
+				</div>
+			</Show>
 
 			<Show when={imagesLength() > 1}>
 				<ul class='my-12 flex items-center justify-center gap-2 overflow-auto py-1 lg:mb-0'>
@@ -100,8 +105,8 @@ export function Gallery(props: {
 										class='h-full w-full'
 									>
 										<GridTileImage
-											alt={image.altText}
-											src={image.src}
+											alt={image?.altText}
+											src={image?.src}
 											width={80}
 											height={80}
 											active={isActive()}

@@ -6,7 +6,7 @@ export default defineConfig(() => {
   return {
     plugins: [solid({
       ssr: true, adapter: vercel({ edge: true }), experimental: {
-        islands: false, islandsRouter: false
+        islands: true, islandsRouter: true
       }
     })],
   };
