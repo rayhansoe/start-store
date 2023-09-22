@@ -1,10 +1,10 @@
 import solid from "solid-start/vite";
 import { defineConfig } from "vite";
-import node from "solid-start-node";
+import vercel from "solid-start-vercel";
 
 export default defineConfig(() => {
   return {
-    plugins: [solid({ ssr: true, adapter: node(), experimental: {
+    plugins: [solid({ ssr: true, adapter: vercel({edge: true}), experimental: {
       islands: true, islandsRouter: true
     } })],
   };
