@@ -235,7 +235,7 @@ export function routeData() {
 			};
 			type Data = typeof data;
 			return new Promise((resolve: (value: Data) => void) => {
-				setTimeout(() => resolve(data), 1000);
+				setTimeout(() => resolve(data));
 			});
 		}),
 		{

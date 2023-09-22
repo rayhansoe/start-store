@@ -73,8 +73,7 @@ export function routeData() {
 										priceRange: { maxVariantPrice: { amount: '', currencyCode: 'USD' } },
 									},
 								],
-							}),
-						500
+							})
 					);
 				}
 			);

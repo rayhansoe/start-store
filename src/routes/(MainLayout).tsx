@@ -32,7 +32,7 @@ export function routeData() {
 							totalTaxAmount: { amount: '0', currencyCode: 'EUR' },
 						},
 					},
-				}), 2000)
+				}))
 			});
 		}),
 		{
