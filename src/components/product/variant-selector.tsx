@@ -1,5 +1,3 @@
-"use client";
-
 import clsx from 'clsx';
 import { Index, Show } from 'solid-js';
 import { A, useLocation, useSearchParams } from 'solid-start';
