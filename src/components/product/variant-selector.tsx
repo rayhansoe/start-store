@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from 'clsx';
-import { For, Show } from 'solid-js';
+import { Index, Show } from 'solid-js';
 import { A, useLocation, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 
@@ -203,18 +203,18 @@ export function VariantSelector(props: {
 
 	return (
 		<Show when={!hasNoOptionsOrJustOneOption()}>
-			<For each={options()}>
+			<Index each={options()}>
 				{(option) => (
 					<dl class='mb-8'>
 						<dt class='mb-4 text-sm uppercase tracking-wide'>{option.name}</dt>
 						<dd class='flex flex-wrap gap-3'>
-							<For each={option.values}>
+							<Index each={option().values}>
 								{(value) => {
 									const optionNameLowerCase = () => option.name.toLowerCase();
 									const optionSearchParams = () =>
 										new URLSearchParams({
 											...searchParams,
-											[optionNameLowerCase()]: value,
+											[optionNameLowerCase()]: value(),
 										});
 									const optionUrl = () =>
 										createUrl(location.pathname, optionSearchParams());
@@ -254,7 +254,7 @@ export function VariantSelector(props: {
 									);
 
 									// The option is active if it's in the url params.
-									const isActive = () => searchParams[optionNameLowerCase()] === value;
+									const isActive = () => searchParams[optionNameLowerCase()] === value();
 
 									// You can't disable a link, so we need to render something that isn't clickable.
 									// const DynamicTag = isAvailableForSale ? A : 'p';
@@ -278,14 +278,14 @@ export function VariantSelector(props: {
 														}
 													)}
 												>
-													{value}
+													{value()}
 												</p>
 											}
 										>
 											<A
 												aria-disabled={!isAvailableForSale()}
 												href={optionUrl()}
-												title={`${option.name} ${value}${
+												title={`${option.name} ${value()}${
 													!isAvailableForSale() ? ' (Out of Stock)' : ''
 												}`}
 												class={clsx(
@@ -300,16 +300,16 @@ export function VariantSelector(props: {
 												)}
 												{...dynamicProps}
 											>
-												{value}
+												{value()}
 											</A>
 										</Show>
 									);
 								}}
-							</For>
+							</Index>
 						</dd>
 					</dl>
 				)}
-			</For>
+			</Index>
 		</Show>
 	);
 }
