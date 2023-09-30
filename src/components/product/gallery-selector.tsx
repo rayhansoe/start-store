@@ -1,6 +1,6 @@
+"use client";
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
-import { Show } from 'solid-js';
 import { A, useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 
@@ -38,9 +38,7 @@ export default function GallerySelector(props: {
 		'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
 
 	return (
-		<Show when={props.imagesLength > 1}>
-			<div class='absolute bottom-[15%] flex w-full justify-center'>
-				<div class='mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80'>
+    <>
 					<A
 						aria-label='Previous product image'
 						href={previousUrl()}
@@ -60,8 +58,6 @@ export default function GallerySelector(props: {
 					>
 						<Icon path={arrowRight} class='h-5' />
 					</A>
-				</div>
-			</div>
-		</Show>
+    </>
 	);
 }

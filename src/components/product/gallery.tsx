@@ -33,14 +33,19 @@ export function Gallery(props: {
 							loading='eager'
 						/>
 					)}
-
-					<GallerySelector
-						imageIndex={imageIndex()}
-						imagesLength={imagesLength()}
-						images={props.images}
-						params={props.params}
-						pathname={location.pathname}
-					/>
+					<Show when={imagesLength() > 1}>
+						<div class='absolute bottom-[15%] flex w-full justify-center'>
+							<div class='mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80'>
+								<GallerySelector
+									imageIndex={imageIndex()}
+									imagesLength={imagesLength()}
+									images={props.images}
+									params={props.params}
+									pathname={location.pathname}
+								/>
+							</div>
+						</div>
+					</Show>
 				</div>
 			</Show>
 
