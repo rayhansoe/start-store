@@ -1,4 +1,3 @@
-"use client";
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
 import { A, useLocation } from 'solid-start';
