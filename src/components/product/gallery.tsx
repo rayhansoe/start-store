@@ -1,5 +1,5 @@
 import { For, Show } from 'solid-js';
-import { A } from 'solid-start';
+import { A, useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { GridTileImage } from '../grid/tile';
 import GallerySelector from './gallery-selector';
@@ -11,6 +11,7 @@ export function Gallery(props: {
 	}[];
 	params: Record<string, string>;
 }) {
+	const location = useLocation();
 	const imageSearchParam = () => props.params?.image;
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
@@ -19,12 +20,29 @@ export function Gallery(props: {
 
 	return (
 		<>
-			<GallerySelector
-				imageIndex={imageIndex()}
-				imagesLength={imagesLength()}
-				images={props.images}
-				params={props.params}
-			/>
+			<Show when={props?.images}>
+				<div class='relative aspect-square h-full max-h-[550px] w-full overflow-hidden'>
+					{props?.images[imageIndex()] && (
+						<img
+							class='h-full w-full object-contain'
+							// fill
+							sizes='(min-width: 1024px) 66vw, 100vw'
+							alt={props.images[imageIndex()]?.altText as string}
+							src={props.images[imageIndex()]?.src as string}
+							// priority={true}
+							loading='eager'
+						/>
+					)}
+
+					<GallerySelector
+						imageIndex={imageIndex()}
+						imagesLength={imagesLength()}
+						images={props.images}
+						params={props.params}
+						pathname={location.pathname}
+					/>
+				</div>
+			</Show>
 
 			<Show when={imagesLength() > 1}>
 				<ul class='my-12 flex items-center justify-center gap-2 overflow-auto py-1 lg:mb-0'>
