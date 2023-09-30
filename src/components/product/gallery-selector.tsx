@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Icon } from "solid-heroicons"
 import { arrowLeft, arrowRight } from "solid-heroicons/outline"
