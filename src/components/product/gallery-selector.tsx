@@ -3,7 +3,7 @@
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
 import { Show } from 'solid-js';
-import { A } from 'solid-start';
+import { A, useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 
 export default function GallerySelector(props: {
@@ -16,13 +16,14 @@ export default function GallerySelector(props: {
 		altText: string;
 	}[];
 }) {
+  const {pathname} = useLocation()
 	const nextImageIndex = () =>
 		props.imageIndex + 1 < props.imagesLength ? props.imageIndex + 1 : 0;
 
 	const nextSearchParams = () =>
 		new URLSearchParams({ ...props.params, image: nextImageIndex().toString() });
 
-	const nextUrl = () => createUrl(props.pathname, nextSearchParams());
+	const nextUrl = () => createUrl(pathname, nextSearchParams());
 
 	const previousImageIndex = () =>
 		props.imageIndex === 0 ? props.imagesLength - 1 : props.imageIndex - 1;
@@ -33,7 +34,7 @@ export default function GallerySelector(props: {
 			image: previousImageIndex().toString(),
 		});
 
-	const previousUrl = () => createUrl(props.pathname, previousSearchParams());
+	const previousUrl = () => createUrl(pathname, previousSearchParams());
 
 	const buttonClass =
 		'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
