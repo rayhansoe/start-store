@@ -258,9 +258,9 @@ export function VariantSelector(props: {
 
 									// You can't disable a link, so we need to render something that isn't clickable.
 									// const DynamicTag = isAvailableForSale ? A : 'p';
-									const dynamicProps = {
-										...(isAvailableForSale() && { noScroll: true }),
-									};
+									// const dynamicProps = {
+									// 	...(isAvailableForSale() && { noScroll: true }),
+									// };
 
 									return (
 										<Show
@@ -277,7 +277,7 @@ export function VariantSelector(props: {
 												title={`${option.name} ${value}${
 													!isAvailableForSale() ? ' (Out of Stock)' : ''
 												}`}
-												{...dynamicProps}
+												noScroll={isAvailableForSale() ? true : false}
 												class={clsx('h-full w-full', {'pointer-events-none': isActive()})}
 											>
 												<SpanA
