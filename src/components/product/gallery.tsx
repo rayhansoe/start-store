@@ -118,7 +118,7 @@ export function Gallery(props: {
 					</For>
 				</ul>
 			</Show> */}
-			<ImageSelector imageIndex={imageIndex()} images={props.images} imagesLength={imagesLength()} />
+			<ImageSelector searchParams={searchParams} imageIndex={imageIndex()} images={props.images} imagesLength={imagesLength()} />
 		</>
 	);
 }

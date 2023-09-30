@@ -2,18 +2,18 @@
 
 import { For, Show } from 'solid-js';
 import { GridTileImage } from '../grid/tile';
-import { A, useSearchParams } from 'solid-start';
+import { A } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 
 export default function ImageSelector(props: {
 	imagesLength: number;
+  searchParams: Record<string, string>,
 	images: {
 		src: string;
 		altText: string;
 	}[];
 	imageIndex: number;
 }) {
-	const [searchParams] = useSearchParams();
 	return (
 		<>
 			<Show when={props.imagesLength > 1}>
@@ -22,7 +22,7 @@ export default function ImageSelector(props: {
 						{(image, index) => {
 							const isActive = () => index() === props.imageIndex;
 							const imageSearchParams = () =>
-								new URLSearchParams({ ...searchParams, image: index().toString() });
+								new URLSearchParams({ ...props.searchParams, image: index().toString() });
 
 							// imageSearchParams().set('image', index().toString());
 
