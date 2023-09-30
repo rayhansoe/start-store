@@ -85,7 +85,7 @@ export function Gallery(props: {
 								<li class='h-auto w-20'>
 									<A
 										aria-label='Enlarge product image'
-										href={createUrl(location.pathname, imageSearchParams())}
+										href={createUrl(loacation.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
 										activeClass='pointer-events-none'
