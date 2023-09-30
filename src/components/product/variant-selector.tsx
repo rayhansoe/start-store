@@ -278,12 +278,10 @@ export function VariantSelector(props: {
 													!isAvailableForSale() ? ' (Out of Stock)' : ''
 												}`}
 												{...dynamicProps}
+												class={clsx('', { 'pointer-events-none': isActive() })}
 											>
 												<SpanA
-													class={clsx(
-														'flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900',
-														{ 'pointer-events-none': isActive() }
-													)}
+													class='flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900'
 													isActive={isActive()}
 													isAvailableForSale={isAvailableForSale()}
 												>
