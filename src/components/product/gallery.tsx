@@ -11,12 +11,32 @@ export function Gallery(props: {
 	}[];
 	params: Record<string, string>;
 }) {
-	const location = useLocation();
+	const loacation = useLocation();
 	const imageSearchParam = () => props.params?.image;
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
 	const imagesLength = () => props.images?.length;
+
+	
+	const nextImageIndex = () =>
+		imageIndex() + 1 < imagesLength() ? imageIndex() + 1 : 0;
+
+	const nextSearchParams = () =>
+		new URLSearchParams({ ...props.params, image: nextImageIndex().toString() });
+
+	const nextUrl = () => createUrl(loacation.pathname, nextSearchParams());
+
+	const previousImageIndex = () =>
+		imageIndex() === 0 ? imagesLength() - 1 : imageIndex() - 1;
+
+	const previousSearchParams = () =>
+		new URLSearchParams({
+			...props.params,
+			image: previousImageIndex().toString(),
+		});
+
+	const previousUrl = () => createUrl(loacation.pathname, previousSearchParams());
 
 	return (
 		<>
@@ -41,7 +61,9 @@ export function Gallery(props: {
 									imagesLength={imagesLength()}
 									images={props.images}
 									params={props.params}
-									pathname={location.pathname}
+									pathname={loacation.pathname}
+									nextUrl={nextUrl()}
+									previousUrl={previousUrl()}
 								/>
 							</div>
 						</div>
