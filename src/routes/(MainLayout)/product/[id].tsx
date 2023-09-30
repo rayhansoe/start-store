@@ -1,7 +1,9 @@
 import { Show, Suspense } from 'solid-js';
 import { useRouteData, useSearchParams } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
-import { Gallery } from '~/components/product/gallery';
+import { GalleryWrapper } from '~/components/product/GalleryWrapper';
+import ProductImage from '~/components/product/Image';
+import ImageSelector from '~/components/product/image-selector';
 import { ProductDescription } from '~/components/product/product-description';
 
 export function routeData() {
@@ -253,7 +255,35 @@ export default function ProductPage() {
 					<div class='mx-auto max-w-screen-2xl px-4'>
 						<div class='flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row'>
 							<div class='h-full w-full basis-full lg:basis-4/6'>
-								<Gallery
+								{/* <Gallery
+									params={params}
+									images={product()?.images?.map(
+										(image: { id: string; url: string; altText: string }) => ({
+											src: image.url,
+											altText: image.altText,
+										})
+									)}
+								/> */}
+								<GalleryWrapper
+									images={product()?.images?.map(
+										(image: { id: string; url: string; altText: string }) => ({
+											src: image.url,
+											altText: image.altText,
+										})
+									)}
+									params={params}
+								>
+									<ProductImage
+										params={params}
+										images={product()?.images?.map(
+											(image: { id: string; url: string; altText: string }) => ({
+												src: image.url,
+												altText: image.altText,
+											})
+										)}
+									/>
+								</GalleryWrapper>
+								<ImageSelector
 									params={params}
 									images={product()?.images?.map(
 										(image: { id: string; url: string; altText: string }) => ({
