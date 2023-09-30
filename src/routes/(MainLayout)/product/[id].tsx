@@ -1,13 +1,13 @@
 import { Show, Suspense } from 'solid-js';
-import { createRouteData, useRouteData } from 'solid-start';
-import server$ from 'solid-start/server';
+import { useRouteData } from 'solid-start';
+import { createServerData$ } from 'solid-start/server';
 import { Gallery } from '~/components/product/gallery';
 import { ProductDescription } from '~/components/product/product-description';
 
 export function routeData() {
-	const data = createRouteData(
-		server$(async () => {
-			const data = {
+	const data = createServerData$(
+		async () => {
+			return {
 				id: 'prod_01H9F101JETR2NY9FN4E2YXAGQ',
 				title: 'Medusa Hoodie',
 				subtitle: null,
@@ -60,8 +60,8 @@ export function routeData() {
 						height: null,
 						width: null,
 						metadata: null,
-						prices: [Array],
-						options: [Array],
+						// prices: [Array],
+						// options: [Array],
 						original_price: null,
 						calculated_price: null,
 						original_price_incl_tax: null,
@@ -71,7 +71,7 @@ export function routeData() {
 						tax_rates: null,
 						availableForSale: true,
 						selectedOptions: [{ name: 'Size', value: 'S' }],
-						price: [Object],
+						// price: [Object],
 					},
 					{
 						id: 'variant_01H9F101KVB4N6QTVBZMK70TZT',
@@ -97,8 +97,8 @@ export function routeData() {
 						height: null,
 						width: null,
 						metadata: null,
-						prices: [Array],
-						options: [Array],
+						// prices: [Array],
+						// options: [Array],
 						original_price: null,
 						calculated_price: null,
 						original_price_incl_tax: null,
@@ -108,7 +108,7 @@ export function routeData() {
 						tax_rates: null,
 						availableForSale: true,
 						selectedOptions: [{ name: 'Size', value: 'M' }],
-						price: [Object],
+						// price: [Object],
 					},
 					{
 						id: 'variant_01H9F101MPXDE1F2TDGFEKCFC1',
@@ -134,8 +134,8 @@ export function routeData() {
 						height: null,
 						width: null,
 						metadata: null,
-						prices: [Array],
-						options: [Array],
+						// prices: [Array],
+						// options: [Array],
 						original_price: null,
 						calculated_price: null,
 						original_price_incl_tax: null,
@@ -145,7 +145,7 @@ export function routeData() {
 						tax_rates: null,
 						availableForSale: true,
 						selectedOptions: [{ name: 'Size', value: 'L' }],
-						price: [Object],
+						// price: [Object],
 					},
 					{
 						id: 'variant_01H9F101NKN61MJAWWA70ZZRWX',
@@ -171,8 +171,8 @@ export function routeData() {
 						height: null,
 						width: null,
 						metadata: null,
-						prices: [Array],
-						options: [Array],
+						// prices: [Array],
+						// options: [Array],
 						original_price: null,
 						calculated_price: null,
 						original_price_incl_tax: null,
@@ -182,7 +182,7 @@ export function routeData() {
 						tax_rates: null,
 						availableForSale: true,
 						selectedOptions: [{ name: 'Size', value: 'XL' }],
-						price: [Object],
+						// price: [Object],
 					},
 				],
 				options: [
@@ -233,11 +233,7 @@ export function routeData() {
 					'Reimagine the feeling of a classic hoodie. With our cotton hoodie, everyday essentials no longer have to be ordinary.',
 				availableForSale: true,
 			};
-			type Data = typeof data;
-			return new Promise((resolve: (value: Data) => void) => {
-				setTimeout(() => resolve(data));
-			});
-		}),
+		},
 		{
 			deferStream: true,
 		}

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Show, For, Suspense } from 'solid-js';
-import { A, Outlet, createRouteData, useRouteData } from 'solid-start';
-import server$ from 'solid-start/server';
+import { A, Outlet, useRouteData } from 'solid-start';
+import { createServerData$ } from 'solid-start/server';
 import CartModal from '~/components/cart/modal';
 import OpenCart from '~/components/cart/open-cart';
 import MobileMenu from '~/components/layout/navbar/mobile-menu';
@@ -9,32 +9,20 @@ import Search from '~/components/layout/navbar/search';
 import LogoSquare from '~/components/logo-square';
 
 export function routeData() {
-	const data = createRouteData(
-		server$(async () => {
-			return new Promise((resolve: (value: {
+	const data = createServerData$(
+		async () => {
+			return {
 				cart: {
-					totalQuantity: number,
-					checkoutUrl: string,
+					totalQuantity: 12,
+					checkoutUrl: '/cart',
 					cost: {
-						subtotalAmount: { amount: string, currencyCode: string },
-						totalAmount: { amount: string, currencyCode: string },
-						totalTaxAmount: { amount: string, currencyCode: string },
+						subtotalAmount: { amount: '0', currencyCode: 'EUR' },
+						totalAmount: { amount: '0', currencyCode: 'EUR' },
+						totalTaxAmount: { amount: '0', currencyCode: 'EUR' },
 					},
-				}
-			}) => void) => {
-				setTimeout(() => resolve({
-					cart: {
-						totalQuantity: 12,
-						checkoutUrl: '/cart',
-						cost: {
-							subtotalAmount: { amount: '0', currencyCode: 'EUR' },
-							totalAmount: { amount: '0', currencyCode: 'EUR' },
-							totalTaxAmount: { amount: '0', currencyCode: 'EUR' },
-						},
-					},
-				}))
-			});
-		}),
+				},
+			};
+		},
 		{
 			deferStream: true,
 		}
