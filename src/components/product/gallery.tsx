@@ -1,7 +1,8 @@
+"use client"
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
 import { For, Show } from 'solid-js';
-import { A, useLocation, useSearchParams } from 'solid-start';
+import { A, useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { GridTileImage } from '../grid/tile';
 
@@ -10,10 +11,10 @@ export function Gallery(props: {
 		src: string;
 		altText: string;
 	}[];
+	params: Record<string, string>
 }) {
 	const location = useLocation();
-	const [searchParams] = useSearchParams();
-	const imageSearchParam = () => searchParams?.image;
+	const imageSearchParam = () => props.params?.image;
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
@@ -23,7 +24,7 @@ export function Gallery(props: {
 		imageIndex() + 1 < imagesLength() ? imageIndex() + 1 : 0;
 
 	const nextSearchParams = () =>
-		new URLSearchParams({ ...searchParams, image: nextImageIndex().toString() });
+		new URLSearchParams({ ...props.params, image: nextImageIndex().toString() });
 
 	const nextUrl = () => createUrl(location.pathname, nextSearchParams());
 
@@ -32,7 +33,7 @@ export function Gallery(props: {
 
 	const previousSearchParams = () =>
 		new URLSearchParams({
-			...searchParams,
+			...props.params,
 			image: previousImageIndex().toString(),
 		});
 
@@ -91,7 +92,7 @@ export function Gallery(props: {
 						{(image, index) => {
 							const isActive = () => index() === imageIndex();
 							const imageSearchParams = () =>
-								new URLSearchParams({ ...searchParams, image: index().toString() });
+								new URLSearchParams({ ...props.params, image: index().toString() });
 
 							// imageSearchParams().set('image', index().toString());
 

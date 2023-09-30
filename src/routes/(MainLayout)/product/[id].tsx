@@ -1,5 +1,5 @@
 import { Show, Suspense } from 'solid-js';
-import { useRouteData } from 'solid-start';
+import { useRouteData, useSearchParams } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
 import { Gallery } from '~/components/product/gallery';
 import { ProductDescription } from '~/components/product/product-description';
@@ -244,6 +244,7 @@ export function routeData() {
 
 export default function ProductPage() {
 	const data = useRouteData<typeof routeData>();
+	const [params] = useSearchParams();
 
 	return (
 		<Suspense fallback={<h1>Loading...</h1>}>
@@ -253,6 +254,7 @@ export default function ProductPage() {
 						<div class='flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row'>
 							<div class='h-full w-full basis-full lg:basis-4/6'>
 								<Gallery
+									params={params}
 									images={product()?.images?.map(
 										(image: { id: string; url: string; altText: string }) => ({
 											src: image.url,
