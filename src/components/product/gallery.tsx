@@ -1,9 +1,9 @@
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
-import { Show } from 'solid-js';
+import { For, Show } from 'solid-js';
 import { A, useLocation, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
-import ImageSelector from './image-selector';
+import { GridTileImage } from '../grid/tile';
 
 export function Gallery(props: {
 	images: {
@@ -85,7 +85,7 @@ export function Gallery(props: {
 				</div>
 			</Show>
 
-			{/* <Show when={imagesLength() > 1}>
+			<Show when={imagesLength() > 1}>
 				<ul class='my-12 flex items-center justify-center gap-2 overflow-auto py-1 lg:mb-0'>
 					<For each={props.images}>
 						{(image, index) => {
@@ -102,6 +102,7 @@ export function Gallery(props: {
 										href={createUrl(location.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
+										activeClass='pointer-events-none'
 										class='h-full w-full'
 									>
 										<GridTileImage
@@ -117,8 +118,7 @@ export function Gallery(props: {
 						}}
 					</For>
 				</ul>
-			</Show> */}
-			<ImageSelector searchParams={searchParams} imageIndex={imageIndex()} images={props.images} imagesLength={imagesLength()} />
+			</Show>
 		</>
 	);
 }
