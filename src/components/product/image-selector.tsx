@@ -2,9 +2,8 @@
 
 import { For, Show } from 'solid-js';
 import { GridTileImage } from '../grid/tile';
-import { A } from 'solid-start';
+import { A, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
-import { useSearchParams } from 'solid-start/islands/router';
 
 export default function ImageSelector(props: {
 	imagesLength: number;
