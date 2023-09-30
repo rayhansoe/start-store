@@ -16,14 +16,14 @@ export default function GallerySelector(props: {
 		altText: string;
 	}[];
 }) {
-  const {pathname} = useLocation()
+  const loacation = useLocation()
 	const nextImageIndex = () =>
 		props.imageIndex + 1 < props.imagesLength ? props.imageIndex + 1 : 0;
 
 	const nextSearchParams = () =>
 		new URLSearchParams({ ...props.params, image: nextImageIndex().toString() });
 
-	const nextUrl = () => createUrl(pathname, nextSearchParams());
+	const nextUrl = () => createUrl(loacation.pathname, nextSearchParams());
 
 	const previousImageIndex = () =>
 		props.imageIndex === 0 ? props.imagesLength - 1 : props.imageIndex - 1;
@@ -34,7 +34,7 @@ export default function GallerySelector(props: {
 			image: previousImageIndex().toString(),
 		});
 
-	const previousUrl = () => createUrl(pathname, previousSearchParams());
+	const previousUrl = () => createUrl(loacation.pathname, previousSearchParams());
 
 	const buttonClass =
 		'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
