@@ -2,7 +2,6 @@ import { For, Show } from 'solid-js';
 import { A, useLocation, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { SpanA } from '../SpanA';
-import clsx from 'clsx';
 
 export type Combination = {
 	id: string;
@@ -278,7 +277,6 @@ export function VariantSelector(props: {
 													!isAvailableForSale() ? ' (Out of Stock)' : ''
 												}`}
 												noScroll={isAvailableForSale() ? true : false}
-												class={clsx('h-full w-full', {'pointer-events-none': isActive()})}
 											>
 												<SpanA
 													class='flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900'

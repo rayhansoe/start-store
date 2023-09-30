@@ -4,7 +4,6 @@ import { For, Show } from 'solid-js';
 import { A, useLocation, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { GridTileImage } from '../grid/tile';
-import clsx from 'clsx';
 
 export function Gallery(props: {
 	images: {
@@ -103,7 +102,7 @@ export function Gallery(props: {
 										href={createUrl(location.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
-										class={clsx('h-full w-full', {'pointer-events-none': isActive()})}
+										class='h-full w-full'
 									>
 										<GridTileImage
 											alt={image?.altText}
