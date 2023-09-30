@@ -1,4 +1,3 @@
-"use client";
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
 import { A, useLocation } from 'solid-start';
@@ -22,7 +21,6 @@ export default function GallerySelector(props: {
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
 	const imagesLength = () => props.images?.length;
-
 	
 	const nextImageIndex = () =>
 		imageIndex() + 1 < imagesLength() ? imageIndex() + 1 : 0;

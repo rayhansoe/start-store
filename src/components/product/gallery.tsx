@@ -1,3 +1,4 @@
+"use client";
 import { For, Show } from 'solid-js';
 import { A, useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
