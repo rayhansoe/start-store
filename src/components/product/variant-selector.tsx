@@ -2,6 +2,7 @@ import { For, Show } from 'solid-js';
 import { A, useLocation, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { SpanA } from '../SpanA';
+import clsx from 'clsx';
 
 export type Combination = {
 	id: string;
@@ -278,11 +279,15 @@ export function VariantSelector(props: {
 												}`}
 												{...dynamicProps}
 											>
-												<SpanA class='flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900'
-												isActive={isActive()}
-												isAvailableForSale={isAvailableForSale()}>
-
-												{value}
+												<SpanA
+													class={clsx(
+														'flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900',
+														{ 'pointer-events-none': isActive() }
+													)}
+													isActive={isActive()}
+													isAvailableForSale={isAvailableForSale()}
+												>
+													{value}
 												</SpanA>
 											</A>
 										</Show>
