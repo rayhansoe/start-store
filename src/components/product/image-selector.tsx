@@ -36,7 +36,7 @@ export default function ImageSelector(props: {
 										href={createUrl(loacation.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
-										inactiveClass='pointer-events-none'
+										activeClass='pointer-events-none'
 										class='h-full w-full'
 									>
 										<GridTileImage

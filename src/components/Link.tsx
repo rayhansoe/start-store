@@ -13,6 +13,7 @@ export function IslandsA(props: ComponentProps<typeof BaseA>) {
       ? location.hash === props.href
       : location.pathname === props.href;
   };
+  const isActiveX = () => location.pathname === props.href;
 
   return (
     <a
@@ -20,8 +21,8 @@ export function IslandsA(props: ComponentProps<typeof BaseA>) {
       {...rest}
       state={JSON.stringify(props.state)}
       classList={{
-        [props.inactiveClass || "inactive"]: !isActive(),
-        [props.activeClass || "active"]: isActive(),
+        [props.inactiveClass || "inactive"]: !isActiveX(),
+        [props.activeClass || "active"]: isActiveX(),
         ...rest.classList
       }}
       aria-current={isActive() ? "page" : undefined}

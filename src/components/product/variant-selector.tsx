@@ -277,6 +277,7 @@ export function VariantSelector(props: {
 												title={`${option.name} ${value}${
 													!isAvailableForSale() ? ' (Out of Stock)' : ''
 												}`}
+												activeClass='pointer-events-none'
 												noScroll={isAvailableForSale() ? true : false}
 											>
 												<SpanA
