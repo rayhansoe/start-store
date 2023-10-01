@@ -1,7 +1,8 @@
 import { For, Show } from 'solid-js';
-import { A, useLocation, useSearchParams } from 'solid-start';
+import { useLocation, useSearchParams } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { SpanA } from '../SpanA';
+import { Link } from '../Link';
 
 export type Combination = {
 	id: string;
@@ -270,7 +271,7 @@ export function VariantSelector(props: {
 												</p>
 											}
 										>
-											<A
+											<Link
 												aria-disabled={!isAvailableForSale()}
 												href={optionUrl()}
 												title={`${option.name} ${value}${
@@ -285,7 +286,7 @@ export function VariantSelector(props: {
 												>
 													{value}
 												</SpanA>
-											</A>
+											</Link>
 										</Show>
 									);
 								}}

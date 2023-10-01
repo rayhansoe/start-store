@@ -5,13 +5,13 @@ import { Dialog, DialogPanel, Transition, TransitionChild } from 'solid-headless
 // import { Menu } from 'lib/shopify/types';
 import Search from './search';
 // import { createEffect, createSignal } from 'solid-js';
-import { For, createEffect, createSignal, onCleanup } from 'solid-js';
+import { For, createSignal } from 'solid-js';
 // import { useLocation, useSearchParams } from 'solid-start';
 import { Icon } from 'solid-heroicons';
 import { bars_3, xMark } from 'solid-heroicons/outline';
 import type { Menu } from '~/lib/types';
-import { A } from 'solid-start';
 import { isServer } from 'solid-js/web';
+import { Link } from '~/components/Link';
 
 export default function MobileMenu(props: { menu: Menu[] }) {
   // const location = useLocation();
@@ -105,9 +105,9 @@ export default function MobileMenu(props: { menu: Menu[] }) {
                         <li
                         class="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
                       >
-                        <A href={item.path} onClick={closeMobileMenu}>
+                        <Link href={item.path} onClick={closeMobileMenu}>
                           {item.title}
-                        </A>
+                        </Link>
                       </li>
                       )}
                     </For>

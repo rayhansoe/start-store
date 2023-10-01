@@ -1,7 +1,8 @@
 import { Icon } from 'solid-heroicons';
 import { arrowLeft, arrowRight } from 'solid-heroicons/outline';
-import { A, useLocation } from 'solid-start';
+import { useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
+import { Link } from '../Link';
 
 export default function GallerySelector(props: {
 	imageIndex: number;
@@ -48,7 +49,7 @@ export default function GallerySelector(props: {
 		<>
 			<div class='absolute bottom-[15%] flex w-full justify-center'>
 				<div class='mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80'>
-					<A
+					<Link
 						aria-label='Previous product image'
 						href={previousUrl()}
 						class={buttonClass}
@@ -56,9 +57,9 @@ export default function GallerySelector(props: {
 						// scroll={false}
 					>
 						<Icon path={arrowLeft} class='h-5' />
-					</A>
+					</Link>
 					<div class='mx-1 h-6 w-px bg-neutral-500' />
-					<A
+					<Link
 						aria-label='Next product image'
 						href={nextUrl()}
 						class={buttonClass}
@@ -66,7 +67,7 @@ export default function GallerySelector(props: {
 						// scroll={false}
 					>
 						<Icon path={arrowRight} class='h-5' />
-					</A>
+					</Link>
 				</div>
 			</div>
 		</>

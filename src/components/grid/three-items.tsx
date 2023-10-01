@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { A } from 'solid-start';
 import { GridTileImage } from './tile';
 import { type Product } from '~/lib/types';
+import { Link } from '../Link';
 
 function ThreeItemGridItem(props: {
 	item: any;
@@ -16,7 +16,7 @@ function ThreeItemGridItem(props: {
 					: 'md:col-span-2 md:row-span-1'
 			}
 		>
-			<A
+			<Link
 				class='relative block aspect-square h-full w-full'
 				href={`/product/${props.item.slug}`}
 			>
@@ -37,7 +37,7 @@ function ThreeItemGridItem(props: {
 						currencyCode: props.item.priceRange.maxVariantPrice.currencyCode,
 					}}
 				/>
-			</A>
+			</Link>
 		</div>
 	);
 }

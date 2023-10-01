@@ -1,9 +1,10 @@
 "use client";
 import { For, Show } from 'solid-js';
-import { A, useLocation } from 'solid-start';
+import { useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { GridTileImage } from '../grid/tile';
 import GallerySelector from './gallery-selector';
+import { Link } from '../Link';
 
 export function Gallery(props: {
 	images: {
@@ -84,7 +85,7 @@ export function Gallery(props: {
 
 							return (
 								<li class='h-auto w-20'>
-									<A
+									<Link
 										aria-label='Enlarge product image'
 										href={createUrl(loacation.pathname, imageSearchParams())}
 										// scroll={false}
@@ -99,7 +100,7 @@ export function Gallery(props: {
 											height={80}
 											active={isActive()}
 										/>
-									</A>
+									</Link>
 								</li>
 							);
 						}}

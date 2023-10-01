@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import { Show, For, Suspense } from 'solid-js';
-import { A, Outlet, useRouteData } from 'solid-start';
+import { Outlet, useRouteData } from 'solid-start';
 import { createServerData$ } from 'solid-start/server';
+import { Link } from '~/components/Link';
 import CartModal from '~/components/cart/modal';
 import OpenCart from '~/components/cart/open-cart';
 import MobileMenu from '~/components/layout/navbar/mobile-menu';
@@ -60,7 +61,7 @@ const MainLayout = () => {
 				</div>
 				<div class='flex w-full items-center'>
 					<div class='flex w-full md:w-1/3'>
-						<A
+						<Link
 							href='/'
 							class='mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6'
 						>
@@ -68,18 +69,18 @@ const MainLayout = () => {
 							<div class='ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block'>
 								{import.meta.env.VITE_SITE_NAME}
 							</div>
-						</A>
+						</Link>
 						<Show when={navMenu.length}>
 							<ul class='hidden gap-6 text-sm md:flex md:items-center'>
 								<For each={navMenu}>
 									{(item) => (
 										<li>
-											<A
+											<Link
 												href={item.path}
 												class='text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300'
 											>
 												{item.title}
-											</A>
+											</Link>
 										</li>
 									)}
 								</For>
@@ -105,13 +106,13 @@ const MainLayout = () => {
 			<footer class='text-sm text-neutral-500 dark:text-neutral-400'>
 				<div class='mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm dark:border-neutral-700 md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0'>
 					<div>
-						<A
+						<Link
 							class='flex items-center gap-2 text-black dark:text-white md:pt-1'
 							href='/'
 						>
 							<LogoSquare size='sm' />
 							<span class='uppercase'>{import.meta.env.VITE_SITE_NAME}</span>
-						</A>
+						</Link>
 					</div>
 					<Suspense
 						fallback={
@@ -130,7 +131,7 @@ const MainLayout = () => {
 								<For each={footerMenu}>
 									{(item) => (
 										<li>
-											<A
+											<Link
 												href={item.path}
 												class={clsx(
 													'block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm',
@@ -140,7 +141,7 @@ const MainLayout = () => {
 												)}
 											>
 												{item.title}
-											</A>
+											</Link>
 										</li>
 									)}
 								</For>
@@ -148,7 +149,7 @@ const MainLayout = () => {
 						</nav>
 					</Suspense>
 					<div class='md:ml-auto'>
-						<a
+						<Link
 							class='flex h-8 w-max flex-none items-center justify-center rounded-md border border-neutral-200 bg-white text-xs text-black dark:border-neutral-700 dark:bg-black dark:text-white'
 							aria-label='Deploy on Vercel'
 							href='https://vercel.com/templates/next.js/nextjs-commerce'
@@ -156,7 +157,7 @@ const MainLayout = () => {
 							<span class='px-3'>▲</span>
 							<hr class='h-full border-r border-neutral-200 dark:border-neutral-700' />
 							<span class='px-3'>Deploy</span>
-						</a>
+						</Link>
 					</div>
 				</div>
 				<div class='border-t border-neutral-200 py-6 text-sm dark:border-neutral-700'>
@@ -170,9 +171,9 @@ const MainLayout = () => {
 						<p>Designed in California</p>
 						<p class='md:ml-auto'>
 							Crafted by{' '}
-							<a href='https://vercel.com' class='text-black dark:text-white'>
+							<Link href='https://vercel.com' class='text-black dark:text-white'>
 								▲ Vercel
-							</a>
+							</Link>
 						</p>
 					</div>
 				</div>
