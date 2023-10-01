@@ -2,7 +2,7 @@
 
 import { A as BaseA } from "@solidjs/router";
 import type { ComponentProps} from "solid-js";
-import { splitProps } from "solid-js";
+import { createEffect, splitProps } from "solid-js";
 import { useLocation } from "solid-start";
 
 export function IslandsA(props: ComponentProps<typeof BaseA>) {
@@ -14,6 +14,14 @@ export function IslandsA(props: ComponentProps<typeof BaseA>) {
       : location.pathname === props.href;
   };
   const isActiveX = () => location.pathname === props.href;
+
+  createEffect(() => {
+    console.log(location.pathname);
+    console.log(props.href);
+    console.log(isActive());
+    console.log(isActiveX());
+    
+  })
 
   return (
     <a
