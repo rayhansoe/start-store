@@ -13,7 +13,7 @@ export function IslandsA(props: ComponentProps<typeof BaseA>) {
       ? location.hash === props.href
       : location.pathname === props.href;
   };
-  const isActiveX = () => location.pathname === props.href;
+  const isActiveX = () => location.pathname + location.search === props.href;
 
   createEffect(() => {
     console.log(location);
