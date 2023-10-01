@@ -16,6 +16,7 @@ export function IslandsA(props: ComponentProps<typeof BaseA>) {
   const isActiveX = () => location.pathname === props.href;
 
   createEffect(() => {
+    console.log(location);
     console.log(location.pathname);
     console.log(props.href);
     console.log(isActive());
