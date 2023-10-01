@@ -3,7 +3,7 @@
 import { A as BaseA } from "@solidjs/router";
 import type { ComponentProps} from "solid-js";
 import { splitProps } from "solid-js";
-import { useLocation } from "./useLocation";
+import { useLocation } from "solid-start";
 
 export function IslandsA(props: ComponentProps<typeof BaseA>) {
   const [, rest] = splitProps(props, ["state", "activeClass", "inactiveClass", "end"]);
@@ -21,11 +21,10 @@ export function IslandsA(props: ComponentProps<typeof BaseA>) {
       {...rest}
       state={JSON.stringify(props.state)}
       classList={{
-        [props.inactiveClass || "inactive"]: !isActiveX(),
         [props.activeClass || "active"]: isActiveX(),
         ...rest.classList
       }}
-      aria-current={isActive() ? "page" : undefined}
+      aria-current={isActiveX() ? "page" : undefined}
     >
       {rest.children}
     </a>
