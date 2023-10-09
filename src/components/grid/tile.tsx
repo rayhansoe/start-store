@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 // import Image from 'next/image';
 import Label from '../label';
-import type { ComponentProps } from 'solid-js';
+import { mergeProps, type ComponentProps } from 'solid-js';
 
 export function GridTileImage(props: {
   isInteractive?: boolean;
@@ -13,6 +13,7 @@ export function GridTileImage(props: {
     position?: 'bottom' | 'center';
   };
 } & ComponentProps<'img'>) {
+  const merged = mergeProps({ isInteractive: true}, props);
   return (
     <div
       class={clsx(
@@ -27,7 +28,7 @@ export function GridTileImage(props: {
       {props.src ? (
         <img
           class={clsx('relative h-full w-full object-contain', {
-            'transition duration-300 ease-in-out group-hover:scale-105': props.isInteractive
+            'transition duration-300 ease-in-out group-hover:scale-105': merged.isInteractive
           })}
           {...props}
         />

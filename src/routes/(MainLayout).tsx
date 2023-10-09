@@ -154,8 +154,8 @@ export default function MainLayout() {
 						<Search />
 					</div>
 					<div class="flex justify-end md:w-1/3">
-						<Suspense fallback={<h1>Loading...</h1>}>
-							<Show when={data()} fallback={<OpenCart />}>
+						<Suspense fallback={<OpenCart />}>
+							<Show when={data()}>
 								<CartModal cart={data()?.cart} />
 							</Show>
 						</Suspense>
