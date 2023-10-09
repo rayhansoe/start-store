@@ -1,8 +1,8 @@
-import { For, Show } from 'solid-js';
-import { useLocation, useSearchParams } from 'solid-start';
-import { createUrl } from '~/lib/utils';
-import { SpanA } from '../SpanA';
-import { Link } from '../Link';
+"use client";
+import { For, Show, createMemo } from "solid-js";
+import { A, useLocation, useSearchParams } from "solid-start";
+import { createUrl } from "~/lib/utils";
+import { SpanA } from "../SpanA";
 
 export type Combination = {
 	id: string;
@@ -12,12 +12,12 @@ export type Combination = {
 
 const variants = [
 	{
-		id: 'variant_01H9F101K4BMKB3Q1FC2NK2SK2',
-		created_at: '2023-09-04T02:40:21.912Z',
-		updated_at: '2023-09-04T02:40:21.912Z',
+		id: "variant_01H9F101K4BMKB3Q1FC2NK2SK2",
+		created_at: "2023-09-04T02:40:21.912Z",
+		updated_at: "2023-09-04T02:40:21.912Z",
 		deleted_at: null,
-		title: 'S',
-		product_id: 'prod_01H9F101JETR2NY9FN4E2YXAGQ',
+		title: "S",
+		product_id: "prod_01H9F101JETR2NY9FN4E2YXAGQ",
 		sku: null,
 		barcode: null,
 		ean: null,
@@ -45,16 +45,16 @@ const variants = [
 		calculated_tax: null,
 		tax_rates: null,
 		availableForSale: true,
-		selectedOptions: [{ name: 'Size', value: 'S' }],
+		selectedOptions: [{ name: "Size", value: "S" }],
 		// price: [Object],
 	},
 	{
-		id: 'variant_01H9F101KVB4N6QTVBZMK70TZT',
-		created_at: '2023-09-04T02:40:21.912Z',
-		updated_at: '2023-09-04T02:40:21.912Z',
+		id: "variant_01H9F101KVB4N6QTVBZMK70TZT",
+		created_at: "2023-09-04T02:40:21.912Z",
+		updated_at: "2023-09-04T02:40:21.912Z",
 		deleted_at: null,
-		title: 'M',
-		product_id: 'prod_01H9F101JETR2NY9FN4E2YXAGQ',
+		title: "M",
+		product_id: "prod_01H9F101JETR2NY9FN4E2YXAGQ",
 		sku: null,
 		barcode: null,
 		ean: null,
@@ -82,16 +82,16 @@ const variants = [
 		calculated_tax: null,
 		tax_rates: null,
 		availableForSale: true,
-		selectedOptions: [{ name: 'Size', value: 'M' }],
+		selectedOptions: [{ name: "Size", value: "M" }],
 		// price: [Object],
 	},
 	{
-		id: 'variant_01H9F101MPXDE1F2TDGFEKCFC1',
-		created_at: '2023-09-04T02:40:21.912Z',
-		updated_at: '2023-09-04T02:40:21.912Z',
+		id: "variant_01H9F101MPXDE1F2TDGFEKCFC1",
+		created_at: "2023-09-04T02:40:21.912Z",
+		updated_at: "2023-09-04T02:40:21.912Z",
 		deleted_at: null,
-		title: 'L',
-		product_id: 'prod_01H9F101JETR2NY9FN4E2YXAGQ',
+		title: "L",
+		product_id: "prod_01H9F101JETR2NY9FN4E2YXAGQ",
 		sku: null,
 		barcode: null,
 		ean: null,
@@ -119,16 +119,16 @@ const variants = [
 		calculated_tax: null,
 		tax_rates: null,
 		availableForSale: true,
-		selectedOptions: [{ name: 'Size', value: 'L' }],
+		selectedOptions: [{ name: "Size", value: "L" }],
 		// price: [Object],
 	},
 	{
-		id: 'variant_01H9F101NKN61MJAWWA70ZZRWX',
-		created_at: '2023-09-04T02:40:21.912Z',
-		updated_at: '2023-09-04T02:40:21.912Z',
+		id: "variant_01H9F101NKN61MJAWWA70ZZRWX",
+		created_at: "2023-09-04T02:40:21.912Z",
+		updated_at: "2023-09-04T02:40:21.912Z",
 		deleted_at: null,
-		title: 'XL',
-		product_id: 'prod_01H9F101JETR2NY9FN4E2YXAGQ',
+		title: "XL",
+		product_id: "prod_01H9F101JETR2NY9FN4E2YXAGQ",
 		sku: null,
 		barcode: null,
 		ean: null,
@@ -156,7 +156,7 @@ const variants = [
 		calculated_tax: null,
 		tax_rates: null,
 		availableForSale: true,
-		selectedOptions: [{ name: 'Size', value: 'XL' }],
+		selectedOptions: [{ name: "Size", value: "XL" }],
 		// price: [Object],
 	},
 ];
@@ -175,9 +175,9 @@ export function VariantSelector(props: {
 		name: string;
 	}[];
 	variants: typeof variants;
+	params: Record<string, string>;
 }) {
 	const location = useLocation();
-	const [searchParams] = useSearchParams();
 
 	const options = () => props.options;
 	const variants = () => props.variants;
@@ -204,17 +204,17 @@ export function VariantSelector(props: {
 		<Show when={!hasNoOptionsOrJustOneOption()}>
 			<For each={options()}>
 				{(option) => (
-					<dl class='mb-8'>
-						<dt class='mb-4 text-sm uppercase tracking-wide'>{option.name}</dt>
-						<dd class='flex flex-wrap gap-3'>
+					<dl class="mb-8">
+						<dt class="mb-4 text-sm uppercase tracking-wide">{option.name}</dt>
+						<dd class="flex flex-wrap gap-3">
 							<For each={option.values}>
 								{(value) => {
 									const optionNameLowerCase = () => option.name.toLowerCase();
-									const optionSearchParams = () =>
-										new URLSearchParams({
-											...searchParams,
-											[optionNameLowerCase()]: value,
-										});
+									const optionSearchParams = createMemo(() => {
+										const params = new URLSearchParams(location.search);
+										params.set(optionNameLowerCase(), value);
+										return params;
+									});
 									const optionUrl = () =>
 										createUrl(location.pathname, optionSearchParams());
 
@@ -254,7 +254,7 @@ export function VariantSelector(props: {
 										);
 
 									// The option is active if it's in the url params.
-									const isActive = () => searchParams[optionNameLowerCase()] === value;
+									const isActive = () => props.params[optionNameLowerCase()] === value;
 
 									// You can't disable a link, so we need to render something that isn't clickable.
 									// const DynamicTag = isAvailableForSale ? A : 'p';
@@ -266,28 +266,28 @@ export function VariantSelector(props: {
 										<Show
 											when={isAvailableForSale()}
 											fallback={
-												<p class='flex min-w-[48px] items-center justify-center rounded-full border px-2 py-1 text-sm dark:border-neutral-800 relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 before:dark:bg-neutral-700'>
+												<p class="flex min-w-[48px] items-center justify-center rounded-full border px-2 py-1 text-sm dark:border-neutral-800 relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 before:dark:bg-neutral-700">
 													{value}
 												</p>
 											}
 										>
-											<Link
+											<A
 												aria-disabled={!isAvailableForSale()}
 												href={optionUrl()}
 												title={`${option.name} ${value}${
-													!isAvailableForSale() ? ' (Out of Stock)' : ''
+													!isAvailableForSale() ? " (Out of Stock)" : ""
 												}`}
-												activeClass='pointer-events-none'
+												class={isActive() ? "pointer-events-none" : ""}
 												noScroll={isAvailableForSale() ? true : false}
 											>
 												<SpanA
-													class='flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900'
+													class="flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900"
 													isActive={isActive()}
 													isAvailableForSale={isAvailableForSale()}
 												>
 													{value}
 												</SpanA>
-											</Link>
+											</A>
 										</Show>
 									);
 								}}

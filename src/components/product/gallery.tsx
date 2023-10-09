@@ -1,10 +1,10 @@
 "use client";
-import { For, Show } from 'solid-js';
-import { useLocation } from 'solid-start';
+
+import { For, Show, createEffect, createMemo } from 'solid-js';
+import { A, useLocation } from 'solid-start';
 import { createUrl } from '~/lib/utils';
 import { GridTileImage } from '../grid/tile';
 import GallerySelector from './gallery-selector';
-import { Link } from '../Link';
 
 export function Gallery(props: {
 	images: {
@@ -14,7 +14,7 @@ export function Gallery(props: {
 	params: Record<string, string>;
 }) {
 	const loacation = useLocation();
-	const imageSearchParam = () => props.params?.image;
+	const imageSearchParam = () => new URLSearchParams(loacation.search).get('image');
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
@@ -27,7 +27,7 @@ export function Gallery(props: {
 	const nextSearchParams = () =>
 		new URLSearchParams({ ...props.params, image: nextImageIndex().toString() });
 
-	const nextUrl = () => createUrl(loacation.pathname, nextSearchParams());
+	const nextUrl = createMemo(() => createUrl(loacation.pathname, nextSearchParams()));
 
 	const previousImageIndex = () =>
 		imageIndex() === 0 ? imagesLength() - 1 : imageIndex() - 1;
@@ -38,7 +38,7 @@ export function Gallery(props: {
 			image: previousImageIndex().toString(),
 		});
 
-	const previousUrl = () => createUrl(loacation.pathname, previousSearchParams());
+	const previousUrl = createMemo(() => createUrl(loacation.pathname, previousSearchParams()));
 
 	return (
 		<>
@@ -85,13 +85,12 @@ export function Gallery(props: {
 
 							return (
 								<li class='h-auto w-20'>
-									<Link
+									<A
 										aria-label='Enlarge product image'
 										href={createUrl(loacation.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
-										activeClass='pointer-events-none'
-										class='h-full w-full'
+										class={'h-full w-full ' + (isActive() ? 'pointer-events-none' : '')}
 									>
 										<GridTileImage
 											alt={image?.altText}
@@ -100,7 +99,7 @@ export function Gallery(props: {
 											height={80}
 											active={isActive()}
 										/>
-									</Link>
+									</A>
 								</li>
 							);
 						}}

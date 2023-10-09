@@ -1,39 +1,37 @@
 {
   "name": "start-store",
   "scripts": {
-    "dev": "solid-start dev --port 3000",
-    "start": "solid-start start --port 3000",
+    "dev": "solid-start dev",
     "build": "solid-start build",
-    "lint": "eslint --fix \"**/*.{ts,tsx,js,jsx}\""
+    "start": "solid-start start"
   },
   "type": "module",
   "devDependencies": {
+    "@iconify/json": "^2.2.123",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20.6.3",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.49.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-solid": "^0.13.0",
-    "postcss": "^8.4.30",
-    "prettier": "^3.0.3",
+    "postcss": "^8.4.31",
     "prettier-plugin-tailwindcss": "^0.5.4",
+    "sass": "^1.68.0",
     "solid-start-node": "^0.3.6",
-    "solid-start-vercel": "^0.3.6",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2",
+    "typescript": "^4.9.5",
+    "unplugin-icons": "^0.14.15",
     "vite": "^4.4.9"
   },
   "dependencies": {
+    "@solid-primitives/scheduled": "1.1.0",
     "@solidjs/meta": "^0.28.6",
     "@solidjs/router": "^0.8.3",
     "clsx": "^2.0.0",
+    "nprogress": "^0.2.0",
     "solid-headless": "^0.13.1",
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.7.12",
-    "solid-start": "^0.3.6"
+    "solid-start": "^0.3.6",
+    "solid-start-netlify": "^0.3.6",
+    "solid-start-vercel": "^0.3.6"
   },
   "engines": {
     "node": ">=18"

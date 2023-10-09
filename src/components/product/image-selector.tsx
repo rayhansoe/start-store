@@ -1,8 +1,7 @@
 import { For, Show } from 'solid-js';
-import { useLocation } from 'solid-start';
+import { A, useLocation } from 'solid-start';
 import { GridTileImage } from '../grid/tile';
 import { createUrl } from '~/lib/utils';
-import { Link } from '../Link';
 
 export default function ImageSelector(props: {
 	images: {
@@ -12,7 +11,7 @@ export default function ImageSelector(props: {
 	params: Record<string, string>;
 }) {
 	const loacation = useLocation();
-	const imageSearchParam = () => props.params?.image;
+	const imageSearchParam = () => new URLSearchParams(loacation.search).get('image');
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
@@ -31,13 +30,12 @@ export default function ImageSelector(props: {
 
 							return (
 								<li class='h-auto w-20'>
-									<Link
+									<A
 										aria-label='Enlarge product image'
 										href={createUrl(loacation.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
-										activeClass='pointer-events-none'
-										class='h-full w-full'
+										class={'h-full w-full ' + (isActive() ? 'pointer-events-none' : '')}
 									>
 										<GridTileImage
 											alt={image?.altText}
@@ -46,7 +44,7 @@ export default function ImageSelector(props: {
 											height={80}
 											active={isActive()}
 										/>
-									</Link>
+									</A>
 								</li>
 							);
 						}}

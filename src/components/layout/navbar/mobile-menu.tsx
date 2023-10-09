@@ -11,7 +11,7 @@ import { Icon } from 'solid-heroicons';
 import { bars_3, xMark } from 'solid-heroicons/outline';
 import type { Menu } from '~/lib/types';
 import { isServer } from 'solid-js/web';
-import { Link } from '~/components/Link';
+import { A } from 'solid-start';
 
 export default function MobileMenu(props: { menu: Menu[] }) {
   // const location = useLocation();
@@ -105,9 +105,9 @@ export default function MobileMenu(props: { menu: Menu[] }) {
                         <li
                         class="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
                       >
-                        <Link href={item.path} onClick={closeMobileMenu}>
+                        <A href={item.path} onClick={closeMobileMenu}>
                           {item.title}
-                        </Link>
+                        </A>
                       </li>
                       )}
                     </For>

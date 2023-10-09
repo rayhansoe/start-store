@@ -1,7 +1,7 @@
 import {
-  StartServer,
   createHandler,
   renderStream,
+  StartServer,
 } from "solid-start/entry-server";
 
 export default createHandler(

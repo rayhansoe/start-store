@@ -3,11 +3,10 @@
 // import LogoSquare from 'components/logo-square';
 // import MobileMenu from './mobile-menu';
 import Search from './search';
-import type { Menu } from '~/lib/types';
 // import { For, Show, Suspense } from 'solid-js';
 import { For, Show } from 'solid-js';
-import { Link } from '~/components/Link';
-const { SITE_NAME } = process.env;
+import { A } from 'solid-start';
+import { Menu } from '~/lib/types';
 
 export default function Navbar(props: {menu: Menu[]}) {
   // const menu = await getMenu('next-js-frontend-header-menu');
@@ -19,23 +18,23 @@ export default function Navbar(props: {menu: Menu[]}) {
       </div>
       <div class="flex w-full items-center">
         <div class="flex w-full md:w-1/3">
-          <Link href="/" class="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
+          <A href="/" class="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
             {/* <LogoSquare /> */}
             <div class="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-              {SITE_NAME}
+              {import.meta.env.VITE_SITE_NAME}
             </div>
-          </Link>
+          </A>
           <Show when={props.menu.length}>
             <ul class="hidden gap-6 text-sm md:flex md:items-center">
               <For each={props.menu}>
                 {(item) => (
                   <li>
-                  <Link
+                  <A
                     href={item.path}
                     class="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
                   >
                     {item.title}
-                  </Link>
+                  </A>
                 </li>
                 )}
               </For>

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { For } from 'solid-js';
 import { GridTileImage } from './grid/tile';
-import { Link } from './Link';
+import { A } from 'solid-start';
 
 export function Carousel(props: { products: any[] }) {
 
@@ -22,7 +22,7 @@ export function Carousel(props: { products: any[] }) {
 				<For each={carouselProducts}>
 					{(product) => (
 						<li class='relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3'>
-							<Link href={`/product/${product.handle}`} class='relative h-full w-full'>
+							<A href={`/product/${product.handle}`} class='relative h-full w-full'>
 								<GridTileImage
 									alt={product.title}
 									label={{
@@ -33,7 +33,7 @@ export function Carousel(props: { products: any[] }) {
 									src={product.featuredImage?.url}
 									sizes='(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw'
 								/>
-							</Link>
+							</A>
 						</li>
 					)}
 				</For>

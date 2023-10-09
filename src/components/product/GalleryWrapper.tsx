@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { Show } from "solid-js";
 import { useLocation } from "solid-start";
@@ -15,12 +15,11 @@ export function GalleryWrapper(props:{
   children: JSX.Element
 }) {
 	const loacation = useLocation();
-	const imageSearchParam = () => props.params?.image;
+	const imageSearchParam = () => new URLSearchParams(loacation.search).get('image');
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
 	const imagesLength = () => props.images?.length;
-
 	
 	const nextImageIndex = () =>
 		imageIndex() + 1 < imagesLength() ? imageIndex() + 1 : 0;
