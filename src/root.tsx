@@ -1,6 +1,5 @@
 // @refresh reload
 import "./root.css";
-import { Suspense } from "solid-js";
 import {
 	Body,
 	ErrorBoundary,
@@ -13,9 +12,8 @@ import {
 	Scripts,
 	Title,
 } from "solid-start";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
 import GlobalLoader from "./components/GlobalLoader";
+import { Suspense } from "./components/solid/Suspense";
 
 export default function Root() {
 	return (
@@ -34,13 +32,11 @@ export default function Root() {
 			<Body class="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
 				<ErrorBoundary>
 					<GlobalLoader />
-					{/* <Nav /> */}
 					<Suspense>
 						<Routes>
 							<FileRoutes />
 						</Routes>
 					</Suspense>
-					{/* <Footer /> */}
 				</ErrorBoundary>
 				<Scripts />
 			</Body>

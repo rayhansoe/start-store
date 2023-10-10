@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { A } from 'solid-start';
 import { GridTileImage } from './tile';
-import { type Product } from '~/lib/types';
+import { Product } from '~/lib/shopify/types';
 
 function ThreeItemGridItem(props: {
-	item: any;
+	item: Product;
 	size: 'full' | 'half';
 	loading?: 'eager' | 'lazy';
 }) {
@@ -18,7 +18,7 @@ function ThreeItemGridItem(props: {
 		>
 			<A
 				class='relative block aspect-square h-full w-full'
-				href={`/product/${props.item.slug}`}
+				href={`/product/${props.item.handle}`}
 			>
 				<GridTileImage
 					src={props.item.featuredImage.url}

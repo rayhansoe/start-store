@@ -3,6 +3,7 @@ import { For, Show, createMemo } from "solid-js";
 import { A, useLocation, useSearchParams } from "solid-start";
 import { createUrl } from "~/lib/utils";
 import { SpanA } from "../SpanA";
+import { ProductOption, ProductVariant } from "~/lib/shopify/types";
 
 export type Combination = {
 	id: string;
@@ -162,19 +163,8 @@ const variants = [
 ];
 
 export function VariantSelector(props: {
-	options: {
-		id: string;
-		created_at: string;
-		updated_at: string;
-		deleted_at: null;
-		title: string;
-		product_id: string;
-		metadata: null;
-		values: string[];
-		availableForSale: boolean;
-		name: string;
-	}[];
-	variants: typeof variants;
+	options: ProductOption[]
+	variants: ProductVariant[];
 	params: Record<string, string>;
 }) {
 	const location = useLocation();

@@ -12,13 +12,6 @@ export type Cart = Omit<ShopifyCart, 'lines'> & {
   lines: CartItem[];
 };
 
-export type Product = {
-  slug: string;
-  featuredImage: { url: string };
-  title: string;
-  priceRange: { maxVariantPrice: { amount: string; currencyCode: string } };
-}
-
 export type CartItem = {
   id: string;
   quantity: number;
@@ -68,10 +61,10 @@ export type Page = {
   updatedAt: string;
 };
 
-// export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
-//   variants: ProductVariant[];
-//   images: Image[];
-// };
+export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
+  variants: ProductVariant[];
+  images: Image[];
+};
 
 export type ProductOption = {
   id: string;

@@ -9,7 +9,7 @@ import { For, createSignal } from 'solid-js';
 // import { useLocation, useSearchParams } from 'solid-start';
 import { Icon } from 'solid-heroicons';
 import { bars_3, xMark } from 'solid-heroicons/outline';
-import type { Menu } from '~/lib/types';
+import type { Menu } from '~/lib/type-guards';
 import { isServer } from 'solid-js/web';
 import { A } from 'solid-start';
 

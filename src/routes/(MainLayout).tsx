@@ -1,4 +1,4 @@
-import { For, Show, Suspense } from "solid-js";
+import { For, Show } from "solid-js";
 import { A, Outlet, createRouteData, useRouteData } from "solid-start";
 import server$, { createServerData$ } from "solid-start/server";
 import Footer from "~/components/Footer";
@@ -7,84 +7,22 @@ import LogoSquare from "~/components/logo-square";
 import CartModal from "~/components/cart/modal";
 import OpenCart from "~/components/cart/open-cart";
 import Search from "~/components/layout/navbar/search";
+import { SuspenseList } from "~/components/solid/SuspenseList";
+import { Suspense } from "~/components/solid/Suspense";
 
 export function routeData() {
-	// const data = createRouteData(server$(async () => {
-	// 	// return new Promise(
-	// 	// 	(
-	// 	// 		resolve: (value: {
-	// 	// 			cart: {
-	// 	// 				totalQuantity: 12;
-	// 	// 				checkoutUrl: "/cart";
-	// 	// 				cost: {
-	// 	// 					subtotalAmount: { amount: "0"; currencyCode: "EUR" };
-	// 	// 					totalAmount: { amount: "0"; currencyCode: "EUR" };
-	// 	// 					totalTaxAmount: { amount: "0"; currencyCode: "EUR" };
-	// 	// 				};
-	// 	// 			};
-	// 	// 		}) => void
-	// 	// 	) => {
-	// 	// 		setTimeout(
-	// 	// 			() =>
-	// 	// 				resolve({
-	// 	// 					cart: {
-	// 	// 						totalQuantity: 12,
-	// 	// 						checkoutUrl: "/cart",
-	// 	// 						cost: {
-	// 	// 							subtotalAmount: { amount: "0", currencyCode: "EUR" },
-	// 	// 							totalAmount: { amount: "0", currencyCode: "EUR" },
-	// 	// 							totalTaxAmount: { amount: "0", currencyCode: "EUR" },
-	// 	// 						},
-	// 	// 					},
-	// 	// 				}),
-	// 	// 			500
-	// 	// 		);
-	// 	// 	}
-	// 	// );
-	// 	return {
-	// 		cart: {
-	// 			totalQuantity: 12,
-	// 			checkoutUrl: "/cart",
-	// 			cost: {
-	// 				subtotalAmount: { amount: "0", currencyCode: "EUR" },
-	// 				totalAmount: { amount: "0", currencyCode: "EUR" },
-	// 				totalTaxAmount: { amount: "0", currencyCode: "EUR" },
-	// 			},
-	// 		},
-	// 	}
-	// }));
+	// console.log(
+	// 	"Cart Data Log",
+	// 	"outside server function, route level",
+	// 	Date.now()
+	// );
+
 	const data = createServerData$(
 		async () => {
-			// return new Promise(
-			// 	(
-			// 		resolve: (value: {
-			// 			cart: {
-			// 				totalQuantity: 12;
-			// 				checkoutUrl: "/cart";
-			// 				cost: {
-			// 					subtotalAmount: { amount: "0"; currencyCode: "EUR" };
-			// 					totalAmount: { amount: "0"; currencyCode: "EUR" };
-			// 					totalTaxAmount: { amount: "0"; currencyCode: "EUR" };
-			// 				};
-			// 			};
-			// 		}) => void
-			// 	) => {
-			// 		setTimeout(
-			// 			() =>
-			// 				resolve({
-			// 					cart: {
-			// 						totalQuantity: 12,
-			// 						checkoutUrl: "/cart",
-			// 						cost: {
-			// 							subtotalAmount: { amount: "0", currencyCode: "EUR" },
-			// 							totalAmount: { amount: "0", currencyCode: "EUR" },
-			// 							totalTaxAmount: { amount: "0", currencyCode: "EUR" },
-			// 						},
-			// 					},
-			// 				}),
-			// 			500
-			// 		);
-			// 	}
+			// console.log(
+			// 	"Cart Data Log",
+			// 	"inside server function, route level",
+			// 	Date.now()
 			// );
 			return {
 				cart: {
@@ -99,7 +37,6 @@ export function routeData() {
 			};
 		},
 		{
-			// deferStream: import.meta.env.START_ISLANDS_ROUTER && !import.meta.env.SSR ? false : true,
 			deferStream: false,
 		}
 	);
@@ -115,10 +52,7 @@ export default function MainLayout() {
 	];
 	return (
 		<>
-			<nav
-				class="relative flex items-center justify-between p-4 lg:px-6"
-				 
-			>
+			<nav class="relative flex items-center justify-between p-4 lg:px-6">
 				<div class="block flex-none md:hidden">
 					<MobileMenu menu={navMenu} />
 				</div>
@@ -155,16 +89,18 @@ export default function MainLayout() {
 					</div>
 					<div class="flex justify-end md:w-1/3">
 						<Suspense fallback={<OpenCart />}>
-							<Show when={data()}>
-								<CartModal cart={data()?.cart} />
-							</Show>
+						<Show when={data()}>
+							<CartModal cart={data()?.cart} />
+						</Show>
 						</Suspense>
 					</div>
 				</div>
 			</nav>
-			<Suspense fallback={<h1>Loading...</h1>}>
-				<Outlet />
-			</Suspense>
+			{/* <SuspenseList revealOrder="together"> */}
+				<Suspense fallback={<h1>Loading...</h1>}>
+					<Outlet />
+				</Suspense>
+			{/* </SuspenseList> */}
 			<Footer />
 		</>
 	);

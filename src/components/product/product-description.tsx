@@ -4,9 +4,10 @@ import Prose from "../prose";
 import { Show } from "solid-js";
 import type { Data } from "~/lib/data";
 import AddToCart from "./AddToCart";
+import { Product } from "~/lib/shopify/types";
 
 export function ProductDescription(props: {
-	product: Data;
+	product: Product;
 	params: Record<string, string>;
 }) {
 	return (

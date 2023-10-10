@@ -7,13 +7,13 @@ import server$, { createServerAction$, redirect } from "solid-start/server";
 const status = import.meta.env.START_ISLANDS_ROUTER && !import.meta.env.SSR ? false : true
 
 const addToCart = server$(async () => {
-	console.log("hi server");
+	//    console.log("hi server");
 	return new Promise((resolve: (value: { msg: string }) => void) => {
 		setTimeout(() => {
-			console.log("hi server delay");
+			//    console.log("hi server delay");
 
 			resolve({ msg: "hi" });
-		}, 2000);
+		}, 500);
 	});
 	// return redirect('/')
 });
@@ -34,10 +34,10 @@ function AddToCartIslands() {
 	}
 
 	createEffect(() => {
-		console.log(isPending());
+		//    console.log(isPending());
 	});
 
-	console.log(status);
+	//    console.log(status);
 	
 
 	return (
@@ -59,11 +59,11 @@ function AddToCartIslands() {
 
 function AddToCartBase() {
 	const [incrementing, { Form }] = createServerAction$(async () => {
-		console.log("hi server");
+		//    console.log("hi server");
 		function sleep(ms) {
 			return new Promise((resolve) =>
 				setTimeout(() => {
-					console.log("hi delay");
+					//    console.log("hi delay");
 					resolve({ msg: "hi" });
 				}, ms)
 			);
@@ -72,7 +72,7 @@ function AddToCartBase() {
 		return redirect("/");
 	});
 
-	console.log(status);
+	//    console.log(status);
 	
 
 	return (
