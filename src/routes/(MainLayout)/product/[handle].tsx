@@ -26,9 +26,8 @@ export function routeData({ params }: RouteDataArgs) {
 
 			try {
 				const product = await getProduct(handle);
-				// console.log(product);
-				// console.log("inside server function, route level", Date.now());
-				return {product, relatedProducts: await getProductRecommendations(product.id)};
+				const relatedProducts = await getProductRecommendations(product.id);
+				return { product, relatedProducts };
 			} catch (error) {
 				throw new Error("Data not available");
 			}
@@ -55,41 +54,35 @@ export default function ProductPage() {
 							{(data) => (
 								<div class="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
 									<div class="h-full w-full basis-full lg:basis-4/6">
-									<GalleryWrapper
-										images={data()?.product.images?.map(
-											(image: Image) => ({
+										<GalleryWrapper
+											images={data()?.product.images?.map((image: Image) => ({
 												src: image.url,
 												altText: image.altText,
-											})
-										)}
-										params={params}
-									>
-										<ProductImage
+											}))}
 											params={params}
-											images={data()?.product.images?.map(
-												(image: Image) => ({
+										>
+											<ProductImage
+												params={params}
+												images={data()?.product.images?.map((image: Image) => ({
 													src: image.url,
 													altText: image.altText,
-												})
-											)}
-										/>
-									</GalleryWrapper>
-									<ImageSelector
-										params={params}
-										images={data()?.product.images?.map(
-											(image: Image) => ({
+												}))}
+											/>
+										</GalleryWrapper>
+										<ImageSelector
+											params={params}
+											images={data()?.product.images?.map((image: Image) => ({
 												src: image.url,
 												altText: image.altText,
-											})
-										)}
-									/>
-								</div>
+											}))}
+										/>
+									</div>
 
-								<div class='basis-full lg:basis-2/6'>
-									<ProductDescription product={data().product} params={params} />
+									<div class="basis-full lg:basis-2/6">
+										<ProductDescription product={data().product} params={params} />
 
-									{/* Baru */}
-								</div>
+										{/* Baru */}
+									</div>
 								</div>
 							)}
 						</Show>
@@ -98,9 +91,7 @@ export default function ProductPage() {
 				<Suspense fallback={<h1>Loading Related Products Data...</h1>}>
 					<Show when={data()}>
 						{(relatedProducts) => (
-							<RelatedProducts
-								relatedProducts={relatedProducts().relatedProducts}
-							/>
+							<RelatedProducts relatedProducts={relatedProducts().relatedProducts} />
 						)}
 					</Show>
 				</Suspense>

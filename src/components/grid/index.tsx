@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx';
 
 function Grid(props: any) {
@@ -9,7 +8,7 @@ function Grid(props: any) {
   );
 }
 
-function GridItem(props: any) {
+export function GridItem(props: any) {
   return (
     <li {...props} class={clsx('aspect-square transition-opacity', props.class)}>
       {props.children}
