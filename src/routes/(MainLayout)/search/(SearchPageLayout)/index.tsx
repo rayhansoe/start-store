@@ -48,7 +48,7 @@ export default function SearchPage() {
 						const info = () =>
 							products().length === 0
 								? "There are no products that match "
-								: `Showing ${products().length} ${resultsText} for `;
+								: `Showing ${products().length} ${resultsText()} for `;
 						return (
 							<>
 								<Show when={params.q}>
