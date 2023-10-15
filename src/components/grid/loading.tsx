@@ -12,12 +12,8 @@ export function ThreeGridItemsLoading(props) {
 			<span class="relative block aspect-square h-full w-full">
 				<div
 					class={clsx(
-						"group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg border bg-white dark:bg-neutral-800",
-						{
-							relative: props.label,
-							"border-2 border-blue-600": props.active,
-							"border-neutral-200 dark:border-neutral-800": !props.active,
-						}
+						"group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg bg-white dark:bg-black/90",
+						
 					)}
 				></div>
 			</span>

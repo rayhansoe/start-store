@@ -1,4 +1,4 @@
-import { Show } from "solid-js";
+import { For, Show } from "solid-js";
 import {
 	ErrorBoundary,
 	RouteDataArgs,
@@ -8,6 +8,7 @@ import {
 	useSearchParams,
 } from "solid-start";
 import server$, { createServerData$ } from "solid-start/server";
+import { CarouselLoading } from "~/components/carousel-loading";
 import { GalleryWrapper } from "~/components/product/GalleryWrapper";
 import ProductImage from "~/components/product/Image";
 import { RelatedProducts } from "~/components/product/RelatedProducts";
@@ -48,12 +49,34 @@ export default function ProductPage() {
 
 	return (
 		<>
-			<Suspense fallback={<h1>Loading product data...</h1>}>
-				<Show when={data()}>{(data) => <Title>{data().product.title}</Title>}</Show>
-			</Suspense>
 			<main>
 				<div class="mx-auto max-w-screen-2xl px-4">
-					<Suspense fallback={<h1>Loading product data...</h1>}>
+					<Suspense
+						fallback={
+							<>
+								<div class="flex flex-col rounded-lg border animate-pulse border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
+									<div class="h-full w-full basis-full lg:basis-4/6">
+										<div class="relative aspect-square h-full max-h-[550px] w-full overflow-hidden"></div>
+									</div>
+									<div class="basis-full lg:basis-2/6"></div>
+								</div>
+								<div class="py-8">
+									<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
+									<ul class="flex w-full gap-4 overflow-x-auto pt-1">
+										<For each={Array(8).fill(0)}>
+											{() => (
+												<li class="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
+													<span class="relative h-full w-full">
+														<div class="group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg bg-white dark:bg-black/90"></div>
+													</span>
+												</li>
+											)}
+										</For>
+									</ul>
+								</div>
+							</>
+						}
+					>
 						<Show when={data()}>
 							{(data) => (
 								<>
@@ -90,14 +113,8 @@ export default function ProductPage() {
 											{/* Baru */}
 										</div>
 									</div>
+									<RelatedProducts relatedProducts={data().relatedProducts} />
 								</>
-							)}
-						</Show>
-					</Suspense>
-					<Suspense fallback={<h1>Loading Related Products Data...</h1>}>
-						<Show when={data()}>
-							{(relatedProducts) => (
-								<RelatedProducts relatedProducts={relatedProducts().relatedProducts} />
 							)}
 						</Show>
 					</Suspense>

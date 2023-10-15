@@ -11,7 +11,7 @@ export function CarouselLoading() {
 					{() => (
 						<li class="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3">
 							<span class="relative h-full w-full">
-								<div class="group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg bg-white dark:bg-neutral-800"></div>
+								<div class="group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg bg-white dark:bg-black/90"></div>
 							</span>
 						</li>
 					)}
