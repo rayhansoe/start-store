@@ -14,18 +14,18 @@ export function routeData() {
 export default function SearchLayout() {
   const collections = useRouteData<typeof routeData>()
 	return (
-		<div class="mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black dark:text-white md:flex-row">
-			<div class="order-first w-full flex-none md:max-w-[125px]">
+		<div class="mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black dark:text-white md:flex-row" >
+			<div class="order-first w-full flex-none md:max-w-[125px]" >
 				<Suspense fallback={<Loading />}>
           <Show when={collections()}>
 					  {collections => <FilterList list={collections()} title="Collections" />}
           </Show>
 				</Suspense>
 			</div>
-			<div class="order-last min-h-screen w-full md:order-none">
+			<div class="order-last min-h-screen w-full md:order-none" >
 				<Outlet />
 			</div>
-			<div class="order-none flex-none md:order-last md:w-[125px]">
+			<div class="order-none flex-none md:order-last md:w-[125px]" >
 					<FilterList list={sorting} title="Sort by" />
 			</div>
 		</div>

@@ -31,7 +31,7 @@ export function routeData() {
 export default function Page() {
 	const data = useRouteData<typeof routeData>();
 	return (
-		<main  >
+		<main >
 			<Suspense fallback={<div>Loading...</div>}>
 				<Show when={data()}>
 					{(products) => (

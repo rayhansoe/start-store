@@ -26,12 +26,22 @@ export function GridTileImage(props: {
       )}
     >
       {props.src ? (
-        <img
-          class={clsx('relative h-full w-full object-contain', {
-            'transition duration-300 ease-in-out group-hover:scale-105': merged.isInteractive
-          })}
-          {...props}
-        />
+        <picture>
+          <source srcset={props.src + '&width=640'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=750'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=828'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=1080'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=1920'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=2048'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=3840'} media='(min-width: 768px)' />
+          <img
+            class={clsx('relative h-full w-full object-contain', {
+              'transition duration-300 ease-in-out group-hover:scale-105': merged.isInteractive
+            })}
+            {...props}
+            src={props.src + '&width=512'}
+          />
+        </picture>
       ) : null}
       {props.label ? (
         <Label

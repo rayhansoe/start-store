@@ -8,11 +8,11 @@ import { A, useLocation, useSearchParams } from "solid-start";
 import { Show, createMemo } from "solid-js";
 
 function PathFilterItem(props: { item: PathFilterItem }) {
-	const { pathname } = useLocation();
-	const [params, setParams] = useSearchParams();
+	const { pathname, query } = useLocation();
+	// const [params, setParams] = useSearchParams();
 	const active = () => pathname === props.item.path;
 	const newParams = createMemo(() => {
-		const newParams = new URLSearchParams(params);
+		const newParams = new URLSearchParams(query.toString());
 		newParams.delete("q");
 		return newParams;
 	});
@@ -52,14 +52,14 @@ function PathFilterItem(props: { item: PathFilterItem }) {
 }
 
 function SortFilterItem(props: { item: SortFilterItemType }) {
-	const { pathname } = useLocation();
-	const [params] = useSearchParams();
-	const active = () => params.sort === props.item.slug;
-	// const q = searchParams.q;
+	const { pathname, query } = useLocation();
+	// const [params] = useSearchParams();
+	const active = () => query['sort'] === props.item.slug;
+	const q = () => query['q'];
 	const href = createUrl(
 		pathname,
 		new URLSearchParams({
-			...(params.q && { q: params.q }),
+			...(q() && { q: q() }),
 			...(props.item.slug && props.item.slug.length && { sort: props.item.slug }),
 		})
 	);

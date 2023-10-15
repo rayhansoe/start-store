@@ -5,12 +5,11 @@ import { Icon } from "solid-heroicons";
 import type { ListItem } from ".";
 import { FilterItem } from "./item";
 import { For, Show, createEffect, createSignal } from "solid-js";
-import { useLocation, useSearchParams } from "solid-start";
+import { useLocation } from "solid-start";
 import { chevronDown } from "solid-heroicons/outline";
 
 export default function FilterItemDropdown(props: { list: ListItem[] }) {
-	const { pathname } = useLocation();
-	const [searchParams] = useSearchParams();
+	const { pathname, query } = useLocation();
 	const [active, setActive] = createSignal("");
 	const [openSelect, setOpenSelect] = createSignal(false);
 	let ref: HTMLDivElement;
@@ -30,7 +29,7 @@ export default function FilterItemDropdown(props: { list: ListItem[] }) {
 		props.list.forEach((listItem: ListItem) => {
 			if (
 				("path" in listItem && pathname === listItem.path) ||
-				("slug" in listItem && searchParams.sort === listItem.slug)
+				("slug" in listItem && query['sort'] === listItem.slug)
 			) {
 				setActive(listItem.title);
 			}

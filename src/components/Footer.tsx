@@ -17,9 +17,9 @@ export default function Footer() {
 		{ title: 'Medusa Blog', path: 'https://medusajs.com/blog' },
 	];
 	return (
-		<footer class="text-sm text-neutral-500 dark:text-neutral-400"  >
-			<div class="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm dark:border-neutral-700 md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
-				<div>
+		<footer class="text-sm text-neutral-500 dark:text-neutral-400" >
+			<div class="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm dark:border-neutral-700 md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0" >
+				<div >
 					<A
 						class="flex items-center gap-2 text-black dark:text-white md:pt-1"
 						href="/"
@@ -40,11 +40,11 @@ export default function Footer() {
 						</div>
 					}
 				> */}
-					<nav>
-						<ul>
+					<nav >
+						<ul >
 							<For each={footerMenu}>
 								{(item) => (
-									<li>
+									<li >
 										<A
 											href={item.path}
 											class={clsx(
@@ -62,7 +62,7 @@ export default function Footer() {
 						</ul>
 					</nav>
 				{/* </Suspense> */}
-				<div class="md:ml-auto">
+				<div class="md:ml-auto" >
 					<A
 						class="flex h-8 w-max flex-none items-center justify-center rounded-md border border-neutral-200 bg-white text-xs text-black dark:border-neutral-700 dark:bg-black dark:text-white"
 						aria-label="Deploy on Vercel"
@@ -74,16 +74,16 @@ export default function Footer() {
 					</A>
 				</div>
 			</div>
-			<div class="border-t border-neutral-200 py-6 text-sm dark:border-neutral-700">
-				<div class="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
-					<p>
+			<div class="border-t border-neutral-200 py-6 text-sm dark:border-neutral-700" >
+				<div class="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0" >
+					<p >
 						&copy; {copyrightDate()} {copyrightName}
 						{copyrightName.length && !copyrightName.endsWith(".") ? "." : ""} All
 						rights reserved.
 					</p>
 					<hr class="mx-4 hidden h-4 w-[1px] border-l border-neutral-400 md:inline-block" />
-					<p>Designed in California</p>
-					<p class="md:ml-auto">
+					<p >Designed in California</p>
+					<p class="md:ml-auto" >
 						Crafted by{" "}
 						<A href="https://vercel.com" class="text-black dark:text-white">
 							▲ Vercel
