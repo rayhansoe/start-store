@@ -9,7 +9,7 @@ export default defineConfig({
       compiler: "solid",
     }),
     solid({
-      experimental: { islands: true, islandsRouter: true },
+      experimental: { islands: false, islandsRouter: false },
       adapter: vercel({ edge: true }),
       ssr: true,
     }),

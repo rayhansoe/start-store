@@ -2,6 +2,7 @@ import { Show } from "solid-js";
 import {
 	ErrorBoundary,
 	RouteDataArgs,
+	Title,
 	createRouteData,
 	useRouteData,
 	useSearchParams,
@@ -46,56 +47,62 @@ export default function ProductPage() {
 	const [params] = useSearchParams();
 
 	return (
-		<main>
-			<div class="mx-auto max-w-screen-2xl px-4">
-				<ErrorBoundary fallback={(e) => <span>{e}</span>}>
+		<>
+			<Suspense fallback={<h1>Loading product data...</h1>}>
+				<Show when={data()}>{(data) => <Title>{data().product.title}</Title>}</Show>
+			</Suspense>
+			<main>
+				<div class="mx-auto max-w-screen-2xl px-4">
 					<Suspense fallback={<h1>Loading product data...</h1>}>
 						<Show when={data()}>
 							{(data) => (
-								<div class="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
-									<div class="h-full w-full basis-full lg:basis-4/6">
-										<GalleryWrapper
-											images={data()?.product.images?.map((image: Image) => ({
-												src: image.url,
-												altText: image.altText,
-											}))}
-											params={params}
-										>
-											<ProductImage
+								<>
+									{/* <Title title={data().product.title} /> */}
+									<div class="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
+										<div class="h-full w-full basis-full lg:basis-4/6">
+											<GalleryWrapper
+												images={data()?.product.images?.map((image: Image) => ({
+													src: image.url,
+													altText: image.altText,
+												}))}
+												params={params}
+											>
+												<ProductImage
+													params={params}
+													images={data()?.product.images?.map((image: Image) => ({
+														src: image.url,
+														altText: image.altText,
+													}))}
+												/>
+											</GalleryWrapper>
+											<ImageSelector
 												params={params}
 												images={data()?.product.images?.map((image: Image) => ({
 													src: image.url,
 													altText: image.altText,
 												}))}
 											/>
-										</GalleryWrapper>
-										<ImageSelector
-											params={params}
-											images={data()?.product.images?.map((image: Image) => ({
-												src: image.url,
-												altText: image.altText,
-											}))}
-										/>
-									</div>
+										</div>
 
-									<div class="basis-full lg:basis-2/6">
-										<ProductDescription product={data().product} params={params} />
+										<div class="basis-full lg:basis-2/6">
+											<ProductDescription product={data().product} params={params} />
 
-										{/* Baru */}
+											{/* Baru */}
+										</div>
 									</div>
-								</div>
+								</>
 							)}
 						</Show>
 					</Suspense>
-				</ErrorBoundary>
-				<Suspense fallback={<h1>Loading Related Products Data...</h1>}>
-					<Show when={data()}>
-						{(relatedProducts) => (
-							<RelatedProducts relatedProducts={relatedProducts().relatedProducts} />
-						)}
-					</Show>
-				</Suspense>
-			</div>
-		</main>
+					<Suspense fallback={<h1>Loading Related Products Data...</h1>}>
+						<Show when={data()}>
+							{(relatedProducts) => (
+								<RelatedProducts relatedProducts={relatedProducts().relatedProducts} />
+							)}
+						</Show>
+					</Suspense>
+				</div>
+			</main>
+		</>
 	);
 }
