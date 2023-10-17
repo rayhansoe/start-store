@@ -1,5 +1,5 @@
 import plugin from "tailwindcss/plugin";
-// import { fontFamily } from "tailwindcss/defaultTheme";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         // sans: ["Inter", ...fontFamily.sans]
-        inter: "Inter"
+        inter: ["Inter", ...fontFamily.sans]
       },
       keyframes: {
         fadeIn: {
