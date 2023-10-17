@@ -91,9 +91,11 @@ function AddToCartBase() {
 	);
 }
 
-const AddToCart =
-	import.meta.env.START_ISLANDS_ROUTER && !import.meta.env.SSR
-		? AddToCartIslands
-		: AddToCartBase;
+// const AddToCart =
+// 	import.meta.env.START_ISLANDS_ROUTER && !import.meta.env.SSR
+// 		? AddToCartIslands
+// 		: AddToCartBase;
+
+const AddToCart = AddToCartIslands
 
 export default AddToCart;

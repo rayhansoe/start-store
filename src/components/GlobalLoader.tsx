@@ -2,7 +2,6 @@
 import { createSignal, Show } from "solid-js";
 import { isServer } from "solid-js/web";
 
-import "./GlobalLoader.scss";
 import { useIsRouting } from "solid-start";
 
 function GlobalLoaderIslands () {
