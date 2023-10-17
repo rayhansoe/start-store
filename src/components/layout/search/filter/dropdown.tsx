@@ -4,7 +4,7 @@ import { Icon } from "solid-heroicons";
 // import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import type { ListItem } from ".";
 import { FilterItem } from "./item";
-import { For, Show, createEffect, createSignal } from "solid-js";
+import { For, Show, createEffect, createMemo, createSignal } from "solid-js";
 import { useLocation } from "solid-start";
 import { chevronDown } from "solid-heroicons/outline";
 
@@ -25,15 +25,23 @@ export default function FilterItemDropdown(props: { list: ListItem[] }) {
 		return () => window.removeEventListener("click", handleClickOutside);
 	});
 
-	createEffect(() => {
+	const titleActive = createMemo(() => {
 		props.list.forEach((listItem: ListItem) => {
+			if (("slug" in listItem && !query["sort"] && !listItem.slug)) {
+				setActive(listItem.title)
+			}
 			if (
 				("path" in listItem && pathname === listItem.path) ||
-				("slug" in listItem && query['sort'] === listItem.slug)
+				("slug" in listItem && query["sort"] === listItem.slug)
 			) {
+				console.log(props.list);
+				console.log(listItem.title);
+				console.log(listItem);
+
 				setActive(listItem.title);
 			}
 		});
+		return active();
 	});
 
 	return (
@@ -44,7 +52,7 @@ export default function FilterItemDropdown(props: { list: ListItem[] }) {
 				}}
 				class="flex w-full items-center justify-between rounded border border-black/30 px-4 py-2 text-sm dark:border-white/30"
 			>
-				<div>{active()}</div>
+				<div>{titleActive()}</div>
 				<Icon path={chevronDown} class="h-4" />
 			</div>
 			<Show when={openSelect()}>

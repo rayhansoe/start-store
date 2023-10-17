@@ -46,7 +46,7 @@ export function routeData() {
 export default function MainLayout() {
 	const data = useRouteData<typeof routeData>();
 	const navMenu = [
-		{ title: "Search", path: "/search" },
+		{ title: "All", path: "/search" },
 		// { title: "Shirts", path: "/search/shirts" },
 		// { title: "Merch", path: "/search/merch" },
 	];

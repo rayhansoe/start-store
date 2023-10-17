@@ -9,9 +9,9 @@ import { For, createSignal } from 'solid-js';
 // import { useLocation, useSearchParams } from 'solid-start';
 import { Icon } from 'solid-heroicons';
 import { bars_3, xMark } from 'solid-heroicons/outline';
-import type { Menu } from '~/lib/type-guards';
 import { isServer } from 'solid-js/web';
 import { A } from 'solid-start';
+import { Menu } from '~/lib/shopify/types';
 
 export default function MobileMenu(props: { menu: Menu[] }) {
   // const location = useLocation();
@@ -64,7 +64,7 @@ export default function MobileMenu(props: { menu: Menu[] }) {
         {/* <Bars3Icon class="h-4" /> */}
         <Icon path={bars_3} class='h-4' />
       </button>
-      <Transition show={isOpen()}>
+      <Transition appear show={isOpen()}>
         <Dialog isOpen onClose={closeMobileMenu} class="relative z-50">
           <TransitionChild
             enter="transition-all ease-in-out duration-300"
@@ -73,8 +73,8 @@ export default function MobileMenu(props: { menu: Menu[] }) {
             leave="transition-all ease-in-out duration-200"
             leaveFrom="opacity-100 backdrop-blur-[.5px]"
             leaveTo="opacity-0 backdrop-blur-none"
+            class="fixed inset-0 bg-black/30" aria-hidden="true" 
           >
-            <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
           </TransitionChild>
           <TransitionChild
             enter="transition-all ease-in-out duration-300"

@@ -5,7 +5,7 @@ import vercel from "solid-start-vercel";
 export default defineConfig({
   plugins: [
     solid({
-      experimental: { islands: true, islandsRouter: true },
+      experimental: { islands: false, islandsRouter: false },
       adapter: vercel({ edge: true }),
       ssr: true,
     }),

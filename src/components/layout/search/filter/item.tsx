@@ -56,7 +56,7 @@ function SortFilterItem(props: { item: SortFilterItemType }) {
 	// const [params] = useSearchParams();
 	const active = () => query['sort'] === props.item.slug;
 	const q = () => query['q'];
-	const href = createUrl(
+	const href = () => createUrl(
 		pathname,
 		new URLSearchParams({
 			...(q() && { q: q() }),
@@ -70,7 +70,7 @@ function SortFilterItem(props: { item: SortFilterItemType }) {
 				when={active()}
 				fallback={
 					<A
-						href={href}
+						href={href()}
 						class={clsx("w-full hover:underline hover:underline-offset-4", {
 							"underline underline-offset-4": active(),
 						})}

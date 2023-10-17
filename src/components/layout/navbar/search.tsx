@@ -1,6 +1,8 @@
+"use client";
+import { debounce } from "@solid-primitives/scheduled";
 // import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { Icon } from 'solid-heroicons';
-import { magnifyingGlass } from 'solid-heroicons/outline';
+import { Icon } from "solid-heroicons";
+import { magnifyingGlass } from "solid-heroicons/outline";
 // import { createUrl } from 'lib/utils';
 
 import { createEffect, createSignal } from "solid-js";
@@ -8,49 +10,49 @@ import { useNavigate, useSearchParams } from "solid-start";
 import { createUrl } from "~/lib/utils";
 
 export default function Search() {
-  const router = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [searchValue, setSearchValue] = createSignal('');
+	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+	const [searchValue, setSearchValue] = createSignal("");
 
-  createEffect(() => {
-    setSearchValue(searchParams.q || '');
-  });
+	// createEffect(() => {
+	//   setSearchValue(searchParams.q || '');
+	// });
 
-  function onSubmit(e: Event & {
-    submitter: HTMLElement;
-} & {
-    currentTarget: HTMLFormElement;
-    target: Element;
-}) {
-    e.preventDefault();
+	function update(newValue: string) {
+		if (newValue.length && newValue !== searchValue()) {
+			setSearchValue(newValue);
+			const newParams = new URLSearchParams({ ...searchParams, q: searchValue() });
+			navigate(createUrl("/search", newParams));
+		}
+	}
 
-    const val = e.target as HTMLFormElement;
-    const search = val.search as HTMLInputElement;
-    const newParams = new URLSearchParams(searchParams.toString());
+	const debouncedUpdate = debounce(update, 500);
 
-    if (search.value) {
-      newParams.set('q', search.value);
-    } else {
-      newParams.delete('q');
-    }
-
-    router(createUrl('/search', newParams));
-  }
-
-  return (
-    <form onSubmit={onSubmit} class="w-max-[550px] relative w-full lg:w-80 xl:w-full">
-      <input
-        type="text"
-        name="search"
-        placeholder="Search for products..."
-        autocomplete="off"
-        value={searchValue()}
-        onInput={(e) => setSearchValue(e.target.value)}
-        class="w-full rounded-lg border bg-white px-4 py-2 text-sm text-black placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-transparent dark:text-white dark:placeholder:text-neutral-400"
-      />
-      <div class="absolute right-0 top-0 mr-3 flex h-full items-center">
-        <Icon path={magnifyingGlass} class='h-4' />
-      </div>
-    </form>
-  );
+	return (
+		<form
+			autocomplete="off"
+			onSubmit={(e) => e.preventDefault()}
+			class="w-max-[550px] relative w-full lg:w-80 xl:w-full"
+		>
+			<input
+				type="text"
+				name="q"
+				placeholder="Search for products..."
+				autocomplete="off"
+				value={searchValue()}
+				onInput={(e) => debouncedUpdate(e.currentTarget.value)}
+				onKeyUp={(e) => {
+					e.preventDefault();
+					if (e.key === "Enter") {
+						debouncedUpdate.clear();
+						update(e.currentTarget.value);
+					}
+				}}
+				class="w-full rounded-lg border bg-white px-4 py-2 text-sm text-black placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-transparent dark:text-white dark:placeholder:text-neutral-400"
+			/>
+			<div class="absolute right-0 top-0 mr-3 flex h-full items-center">
+				<Icon path={magnifyingGlass} class="h-4" />
+			</div>
+		</form>
+	);
 }
