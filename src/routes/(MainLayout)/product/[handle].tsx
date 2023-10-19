@@ -1,6 +1,7 @@
 import { For, Show } from "solid-js";
 import {
 	ErrorBoundary,
+	Meta,
 	RouteDataArgs,
 	Title,
 	createRouteData,
@@ -80,7 +81,11 @@ export default function ProductPage() {
 						<Show when={data()}>
 							{(data) => (
 								<>
-									{/* <Title title={data().product.title} /> */}
+									<Title>{(data().product.seo.title || data().product.title) + ' | Start Store'}</Title>
+									<Meta
+										name="description"
+										content={data().product.seo.description || data().product.description}
+									/>
 									<div class="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
 										<div class="h-full w-full basis-full lg:basis-4/6">
 											<GalleryWrapper
