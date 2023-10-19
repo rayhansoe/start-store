@@ -27,19 +27,21 @@ export function GridTileImage(props: {
     >
       {props.src ? (
         <picture>
-          <source srcset={props.src + '&width=640'} media='(min-width: 768px)' />
-          <source srcset={props.src + '&width=750'} media='(min-width: 768px)' />
-          <source srcset={props.src + '&width=828'} media='(min-width: 768px)' />
-          <source srcset={props.src + '&width=1080'} media='(min-width: 768px)' />
-          <source srcset={props.src + '&width=1920'} media='(min-width: 768px)' />
-          <source srcset={props.src + '&width=2048'} media='(min-width: 768px)' />
-          <source srcset={props.src + '&width=3840'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=690'} media='(min-width: 1080px)' />
+          <source srcset={props.src + '&width=625'} media='(min-width: 950px)' />
+          <source srcset={props.src + '&width=600'} media='(min-width: 768px)' />
+          <source srcset={props.src + '&width=595'} media='(min-width: 660px)' />
+          <source srcset={props.src + '&width=512'} media='(min-width: 635px)' />
+          <source srcset={props.src + '&width=386'} media='(min-width: 512px)' />
+          <source srcset={props.src + '&width=312'} media='(min-width: 450px)' />
+          <source srcset={props.src + '&width=256'} media='(min-width: 300px)' />
+          <source srcset={props.src + '&width=152'} media='(min-width: 200px)' />
           <img
             class={clsx('relative h-full w-full object-contain', {
               'transition duration-300 ease-in-out group-hover:scale-105': merged.isInteractive
             })}
             {...props}
-            src={props.src + '&width=512'}
+            src={props.src + '&width=152'}
           />
         </picture>
       ) : null}
