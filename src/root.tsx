@@ -25,14 +25,9 @@ export default function Root() {
 				<Meta name="theme-color" content="#026d56" />
 				<Meta
 					name="description"
-					content="High-performance ecommerce store built with SolidStart, Vercel, and NeonDB."
+					content="High-performance ecommerce store built with SolidStart, Vercel, and Shopify."
 				/>
-				<Link rel="preconnect" href="https://fonts.googleapis.com" />
-				<Link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-				<Link
-					href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-					rel="stylesheet"
-				/>
+				<Link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" as="font" type="font/woff2" crossorigin="" />
 				<Link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Body class="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
