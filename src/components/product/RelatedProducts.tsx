@@ -1,18 +1,20 @@
 import { A, refetchRouteData } from "solid-start";
 import { GridTileImage } from "../grid/tile";
 import { createServerData$ } from "solid-start/server";
-import { For, Show, onMount } from "solid-js";
+import { For, Show, createMemo, createSignal, onMount } from "solid-js";
 import { Suspense } from "../solid/Suspense";
 import { Product } from "~/lib/shopify/types";
 import { getProductRecommendations } from "~/lib/shopify";
+import { isServer } from "solid-js/web";
 
 export function RelatedProducts(props: {
 	id: string;
 	relatedProducts?: Product[];
 }) {
 	// console.log("outside server function, component level", Date.now());
+	const [id, setId] = createSignal("");
 	const relatedProducts = createServerData$(
-		async ([id]) => {
+		async (id) => {
 			// console.log("inside server function, route level", Date.now());
 			// console.log("handle: ", handle);
 
@@ -24,14 +26,14 @@ export function RelatedProducts(props: {
 			}
 		},
 		{
-			key: () => [props.id],
+			key: () => id(),
 			initialValue: undefined,
 			ssrLoadFrom: "initial",
 		}
 	);
 
 	onMount(() => {
-		refetchRouteData(props.id);
+		setId(props.id);
 	});
 
 	return (
