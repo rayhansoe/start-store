@@ -40,30 +40,31 @@ export function routeData({ params }: RouteDataArgs) {
 		}
 	);
 
-	const relatedProducts = createServerData$(
-		async ([handle]) => {
-			// console.log("inside server function, route level", Date.now());
-			// console.log("handle: ", handle);
+	// const relatedProducts = createServerData$(
+	// 	async ([handle]) => {
+	// 		// console.log("inside server function, route level", Date.now());
+	// 		// console.log("handle: ", handle);
 
-			try {
-				const product = await getProduct(handle);
-				const relatedProducts = getProductRecommendations(product.id);
-				return relatedProducts;
-			} catch (error) {
-				throw new Error("Data not available");
-			}
-		},
-		{
-			deferStream: false,
-			key: () => [params?.handle],
-		}
-	);
+	// 		try {
+	// 			const product = await getProduct(handle);
+	// 			const relatedProducts = getProductRecommendations(product.id);
+	// 			return relatedProducts;
+	// 		} catch (error) {
+	// 			throw new Error("Data not available");
+	// 		}
+	// 	},
+	// 	{
+	// 		deferStream: false,
+	// 		key: () => [params?.handle],
+	// 		ssrLoadFrom: "initial",
+	// 	}
+	// );
 
-	return { product, relatedProducts };
+	return { product };
 }
 
 export default function ProductPage() {
-	const { product, relatedProducts } = useRouteData<typeof routeData>();
+	const { product } = useRouteData<typeof routeData>();
 	const [params] = useSearchParams();
 
 	return (
@@ -122,11 +123,12 @@ export default function ProductPage() {
 											{/* Baru */}
 										</div>
 									</div>
+									<RelatedProducts id={product().id} />
 								</>
 							)}
 						</Show>
 					</Suspense>
-					<Suspense
+					{/* <Suspense
 						fallback={
 							<div class="py-8">
 								<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
@@ -147,7 +149,7 @@ export default function ProductPage() {
 						<Show when={relatedProducts()}>
 							{(products) => <RelatedProducts relatedProducts={products()} />}
 						</Show>
-					</Suspense>
+					</Suspense> */}
 				</div>
 			</main>
 		</>
