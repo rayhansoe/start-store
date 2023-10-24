@@ -11,11 +11,11 @@ import { getCollectionProducts } from "~/lib/shopify";
 export function routeData() {
 	// console.log('outside server function, route level', Date.now());
 	const data = createServerData$(
-		async () => {
+		() => {
 			// console.log('inside server function, route level', Date.now());
 
 			try {
-				const homepageItems = await getCollectionProducts({
+				const homepageItems = getCollectionProducts({
 					collection: "automated-collection",
 				});
 				// console.log(homepageItems);

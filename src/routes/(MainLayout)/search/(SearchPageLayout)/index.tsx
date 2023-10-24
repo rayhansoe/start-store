@@ -14,11 +14,11 @@ import { getProducts } from "~/lib/shopify";
 
 export function routeData({ params, location }: RouteDataArgs) {
 	return createServerData$(
-		async ([sort, q]) => {
+		([sort, q]) => {
 			const { sortKey, reverse } =
 				sorting.find((item) => item.slug === sort) || defaultSort;
 
-			const products = await getProducts({ sortKey, reverse, query: q as string });
+			const products = getProducts({ sortKey, reverse, query: q as string });
 			return products;
 		},
 		{
@@ -34,11 +34,11 @@ export default function SearchPage() {
 	const [params] = useSearchParams();
 	const { query } = useLocation();
 	const products = createServerData$(
-		async ([sort, q]) => {
+		([sort, q]) => {
 			const { sortKey, reverse } =
 				sorting.find((item) => item.slug === sort) || defaultSort;
 
-			const products = await getProducts({ sortKey, reverse, query: q as string });
+			const products = getProducts({ sortKey, reverse, query: q as string });
 			return products;
 		},
 		{
