@@ -55,25 +55,7 @@ export function RelatedProducts(props: {
 				</div>
 			}
 		>
-			<Show
-				when={relatedProducts()}
-				fallback={
-					<div class="py-8">
-						<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
-						<ul class="flex w-full gap-4 overflow-x-auto pt-1">
-							<For each={Array(8).fill(0)}>
-								{() => (
-									<li class="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
-										<span class="relative h-full w-full">
-											<div class="group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg bg-white dark:bg-black/90"></div>
-										</span>
-									</li>
-								)}
-							</For>
-						</ul>
-					</div>
-				}
-			>
+			<Show when={relatedProducts()}>
 				{(relatedProducts) => (
 					<>
 						<div class="py-8">
