@@ -98,7 +98,7 @@ export default function ProductPage() {
 						}
 					>
 						<Show when={product()}>
-							{(data) => (
+							{(product) => (
 								<>
 									<Title>
 										{(product().seo.title || product().title) + " | Start Store"}
