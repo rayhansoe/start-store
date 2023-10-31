@@ -9,7 +9,7 @@
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20.8.9",
+    "@types/node": "^20.8.10",
     "autoprefixer": "^10.4.16",
     "cssnano": "^6.0.1",
     "postcss": "^8.4.31",
@@ -27,9 +27,9 @@
     "solid-headless": "^0.13.1",
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.8.1",
-    "solid-start": "^0.3.8",
+    "solid-start": "^0.3.7",
     "solid-start-netlify": "^0.3.8",
-    "solid-start-vercel": "^0.3.8",
+    "solid-start-vercel": "^0.3.7",
     "terracotta": "^1.0.3"
   },
   "engines": {
