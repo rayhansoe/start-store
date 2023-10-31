@@ -34,9 +34,9 @@ export default function FilterItemDropdown(props: { list: ListItem[] }) {
 				("path" in listItem && pathname === listItem.path) ||
 				("slug" in listItem && query["sort"] === listItem.slug)
 			) {
-				console.log(props.list);
-				console.log(listItem.title);
-				console.log(listItem);
+				// console.log(props.list);
+				// console.log(listItem.title);
+				// console.log(listItem);
 
 				setActive(listItem.title);
 			}

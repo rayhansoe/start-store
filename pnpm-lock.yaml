@@ -24,8 +24,8 @@ dependencies:
     specifier: ^3.2.4
     version: 3.2.4(solid-js@1.8.5)
   solid-js:
-    specifier: ^1.8.5
-    version: 1.8.5
+    specifier: ^1.8.1
+    version: 1.8.1
   solid-start:
     specifier: ^0.3.8
     version: 0.3.8(@solidjs/meta@0.28.7)(@solidjs/router@0.8.3)(solid-js@1.8.5)(solid-start-netlify@0.3.8)(solid-start-node@0.3.8)(solid-start-vercel@0.3.8)(vite@4.5.0)
@@ -3810,6 +3810,11 @@ packages:
     dependencies:
       lru-cache: 6.0.0
 
+  /seroval@0.10.4:
+    resolution: {integrity: sha512-TdaE9JkoATjKu+vjwllieX8zWyBTUVxbgWDnOsDJFfmKbM7vLSukuCXuD3pO3kkCtX4daywOW8ps2VCdPhS8/w==}
+    engines: {node: '>=10'}
+    dev: false
+
   /seroval@0.12.0:
     resolution: {integrity: sha512-5qvk9WRORhvOdHVtDv6KEKrTDbG8O9nODDdETfQcJ0u9iaZJ6mAASg/nQgPzqtuV9cqln9msE7WNmD+sJomrIw==}
     engines: {node: '>=10'}
@@ -3857,6 +3862,13 @@ packages:
       solid-js: '>= ^1.2.5'
     dependencies:
       solid-js: 1.8.5
+    dev: false
+
+  /solid-js@1.8.1:
+    resolution: {integrity: sha512-HU4tB/vWY5/0P9GzbvePjK1aucNqUcF1XlAirZBjKkrkWG8XNIN9HSjscTC/nbl3A6JWjrW+OLcPEvWxsMhdng==}
+    dependencies:
+      csstype: 3.1.2
+      seroval: 0.10.4
     dev: false
 
   /solid-js@1.8.5:
