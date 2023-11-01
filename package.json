@@ -24,6 +24,7 @@
     "@solidjs/meta": "^0.28.7",
     "@solidjs/router": "^0.8.3",
     "clsx": "^2.0.0",
+    "dotenv": "^16.3.1",
     "solid-headless": "^0.13.1",
     "solid-heroicons": "^3.2.4",
     "solid-js": "^1.8.1",
