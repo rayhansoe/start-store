@@ -100,13 +100,13 @@ export default function ProductPage() {
 						<Show when={product()}>
 							{(product) => (
 								<>
-									<Title>
+									{/* <Title>
 										{(product().seo.title || product().title) + " | Start Store"}
 									</Title>
 									<Meta
 										name="description"
 										content={product().seo.description || product().description}
-									/>
+									/> */}
 									<div class="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
 										<div class="h-full w-full basis-full lg:basis-4/6">
 											<GalleryWrapper
