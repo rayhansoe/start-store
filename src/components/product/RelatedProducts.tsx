@@ -5,19 +5,17 @@ import { For, Show, createMemo, createSignal, onMount } from "solid-js";
 import { Suspense } from "../solid/Suspense";
 import { Product } from "~/lib/shopify/types";
 import { getProductRecommendations } from "~/lib/shopify";
-import { isServer } from "solid-js/web";
 
 export function RelatedProducts(props: {
 	id: string;
 	relatedProducts?: Product[];
 }) {
-	// console.log("outside server function, component level", Date.now());
 	const [id, setId] = createSignal("");
+
+	const productId = createMemo(() => (id() === "" ? id() : props.id));
+
 	const relatedProducts = createServerData$(
 		async (id) => {
-			// console.log("inside server function, route level", Date.now());
-			// console.log("handle: ", handle);
-
 			try {
 				const relatedProducts = getProductRecommendations(id);
 				return relatedProducts;
@@ -26,14 +24,16 @@ export function RelatedProducts(props: {
 			}
 		},
 		{
-			key: () => id(),
+			key: () => productId(),
 			initialValue: undefined,
 			ssrLoadFrom: "initial",
 		}
 	);
 
 	onMount(() => {
-		setId(props.id);
+		if (productId() === "") {
+			setId(props.id);
+		}
 	});
 
 	return (
@@ -55,7 +55,25 @@ export function RelatedProducts(props: {
 				</div>
 			}
 		>
-			<Show when={relatedProducts()}>
+			<Show
+				when={relatedProducts()}
+				fallback={
+					<div class="py-8">
+						<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
+						<ul class="flex w-full gap-4 overflow-x-auto pt-1">
+							<For each={Array(8).fill(0)}>
+								{() => (
+									<li class="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
+										<span class="relative h-full w-full">
+											<div class="group flex h-full w-full items-center animate-pulse justify-center overflow-hidden rounded-lg bg-white dark:bg-black/90"></div>
+										</span>
+									</li>
+								)}
+							</For>
+						</ul>
+					</div>
+				}
+			>
 				{(relatedProducts) => (
 					<>
 						<div class="py-8">
