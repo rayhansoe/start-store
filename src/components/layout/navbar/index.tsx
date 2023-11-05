@@ -6,7 +6,7 @@ import Search from './search';
 // import { For, Show, Suspense } from 'solid-js';
 import { For, Show } from 'solid-js';
 import { A } from 'solid-start';
-import { Menu } from '~/lib/type-guards';
+import { Menu } from '~/lib/shopify/types';
 
 export default function Navbar(props: {menu: Menu[]}) {
   // const menu = await getMenu('next-js-frontend-header-menu');

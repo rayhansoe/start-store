@@ -1,3 +1,5 @@
+"use client"
+
 import { Dialog, DialogPanel, Transition, TransitionChild, DialogOverlay, DialogTitle } from "terracotta";
 
 // import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -17,7 +19,12 @@ export default function MobileMenu(props: { menu: Menu[] }) {
 	// const location = useLocation();
 	// const [searchParams] = useSearchParams();
 	const [isOpen, setIsOpen] = createSignal(false);
-	const openMobileMenu = () => setIsOpen(true);
+	const openMobileMenu = () => {
+		console.log('hi');
+		console.log(isOpen());
+		
+		setIsOpen(true)
+	};
 	const closeMobileMenu = () => setIsOpen(false);
 
 	// createEffect(() => {
