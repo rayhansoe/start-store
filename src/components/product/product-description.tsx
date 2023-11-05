@@ -35,8 +35,7 @@ export function ProductDescription(props: {
 					html={props.product.descriptionHtml}
 				/>
 			</Show>
-
-			<AddToCart />
+			<AddToCart variants={props.product.variants} availableForSale={props.product.availableForSale} />
 			{/* <AddToCart variants={props.product.variants} availableForSale={props.product.availableForSale} /> */}
 		</>
 	);
