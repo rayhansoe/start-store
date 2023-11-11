@@ -17,6 +17,25 @@
   }
 }
 
+
+/* width */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* @apply ; */
+  background: #555;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  /* @apply ; */
+  background: #888;
+}
+
 a,
 input,
 button {
@@ -81,3 +100,5 @@ button {
     }
   }
 }
+
+ 

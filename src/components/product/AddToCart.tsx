@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { Icon } from "solid-heroicons";
 import { plusCircle } from "solid-heroicons/outline";
-import { createMemo } from "solid-js";
+import { createEffect, createMemo } from "solid-js";
 import { useLocation, useSearchParams } from "solid-start";
 import {
 	createServerAction$,
@@ -14,6 +14,8 @@ import { Cart, ProductVariant } from "~/lib/shopify/types";
 import LoadingDots from "../loading-dots";
 import { addToCart, createCart, getCart } from "~/lib/shopify";
 import { getCookieObject } from "~/utils/cookie";
+import { createUrl } from "~/lib/utils";
+
 const status =
 	import.meta.env.START_ISLANDS_ROUTER && !import.meta.env.SSR ? false : true;
 
@@ -38,7 +40,9 @@ function AddToCartIslands(props: {
 			: !selectedVariantId
 			? "Please select options"
 			: undefined;
+			
 	const location = useLocation();
+
 	const [adding, { Form }] = createServerMultiAction$(
 		async (form: FormData, { request }) => {
 			const id = form.get("selectedVariantId");
@@ -66,7 +70,7 @@ function AddToCartIslands(props: {
 				const cartCookie = `cartId=${cart?.id}; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`;
 
 				await addToCart(cartId, [{ merchandiseId: id, quantity: 1 }]);
-				return redirect(pathname, {
+				return redirect(createUrl(pathname, new URLSearchParams({cart: 'true'})), {
 					headers: new Headers({
 						"set-cookie": cartCookie,
 					}),
@@ -76,6 +80,7 @@ function AddToCartIslands(props: {
 			}
 		}
 	);
+
 
 	return (
 		<>
@@ -127,6 +132,8 @@ function AddToCartBase() {
 		}
 		await sleep(2000);
 		return redirect("/");
+	}, {
+		invalidate: 'cart'
 	});
 
 	//    console.log(status);

@@ -10,8 +10,8 @@ export default function ImageSelector(props: {
 	}[];
 	params: Record<string, string>;
 }) {
-	const loacation = useLocation();
-	const imageSearchParam = () => new URLSearchParams(loacation.search).get('image');
+	const location = useLocation();
+	const imageSearchParam = () => new URLSearchParams(location.search).get('image');
 	const imageIndex = () =>
 		imageSearchParam() ? parseInt(imageSearchParam()) : 0;
 
@@ -32,7 +32,7 @@ export default function ImageSelector(props: {
 								<li class='h-auto w-20'>
 									<A
 										aria-label='Enlarge product image'
-										href={createUrl(loacation.pathname, imageSearchParams())}
+										href={createUrl(location.pathname, imageSearchParams())}
 										// scroll={false}
 										noScroll
 										class={'h-full w-full ' + (isActive() ? 'pointer-events-none' : '')}

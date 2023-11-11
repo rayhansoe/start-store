@@ -19,7 +19,7 @@ import OpenCart from "./open-cart";
 import { Icon } from "solid-heroicons";
 import { shoppingCart, xMark } from "solid-heroicons/outline";
 import { createUrl } from "~/lib/utils";
-import { A, useIsRouting } from "solid-start";
+import { A, useIsRouting, useSearchParams } from "solid-start";
 import Price from "../price";
 import { DEFAULT_OPTION } from "~/lib/constants";
 import {
@@ -38,33 +38,18 @@ type MerchandiseSearchParams = {
 };
 
 export default function CartModal(props: { cart: Cart }) {
-	const [isOpen, setIsOpen] = createSignal(false);
-	let quantityRef = props.cart?.totalQuantity;
-	const openCart = () => setIsOpen(true);
-	const closeCart = () => setIsOpen(false);
-	const isRouting = useIsRouting();
-
-	const y = () => {
-
-		// Open cart modal when quantity changes.
-		if (props.cart?.totalQuantity !== quantityRef) {
-			// But only if it's not already open (quantity also changes when editing items in cart).
-			if (!isOpen()) {
-				setIsOpen(true);
-			}
-
-			// Always update the quantity reference
-			quantityRef = props.cart?.totalQuantity;
-		}
-		return quantityRef;
-	};
+	const totalQuantity = createMemo(() => props.cart?.totalQuantity);
+	const [params, setParams] = useSearchParams()
+	const isCartOpen = () => params.cart === 'true' ? true : false
+	const openCart = () => setParams({cart: 'true'})
+	const closeCart = () => setParams({cart: 'false'})
 
 	return (
 		<>
 			<button aria-label="Open cart" onClick={openCart}>
-				<OpenCart quantity={y()} />
+				<OpenCart quantity={totalQuantity()} />
 			</button>
-			<Transition appear show={isOpen()}>
+			<Transition appear show={isCartOpen()}>
 				<Dialog
 					isOpen
 					class="fixed inset-0 z-10 overflow-y-auto"
@@ -139,15 +124,17 @@ export default function CartModal(props: { cart: Cart }) {
 																>
 																	<div class="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
 																		<img
-                                  class="h-full w-full object-cover"
-                                  width={64}
-                                  height={64}
-                                  alt={
-                                    item.merchandise.product.featuredImage.altText ||
-                                    item.merchandise.product.title
-                                  }
-                                  src={item.merchandise.product.featuredImage.url + "&width=100"}
-                                />
+																			class="h-full w-full object-cover"
+																			width={64}
+																			height={64}
+																			alt={
+																				item.merchandise.product.featuredImage.altText ||
+																				item.merchandise.product.title
+																			}
+																			src={
+																				item.merchandise.product.featuredImage.url + "&width=100"
+																			}
+																		/>
 																	</div>
 
 																	<div class="flex flex-1 flex-col text-base">
@@ -216,7 +203,7 @@ export default function CartModal(props: { cart: Cart }) {
 					</div>
 				</Dialog>
 			</Transition>
-			{/* <Transition show={isOpen()}>
+			{/* <Transition show={isCartOpen()}>
 				<Dialog isOpen onClose={closeCart} class='relative z-50'>
 					<TransitionChild
 						as='div'

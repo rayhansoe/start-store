@@ -21,7 +21,7 @@ import { createCart, getCart } from "~/lib/shopify";
 import { getCookieObject } from "~/utils/cookie";
 
 export function routeData() {
-	const data = createServerData$(
+	const cart = createServerData$(
 		async (_, { request }) => {
 			const event = useRequest();
 
@@ -69,11 +69,11 @@ export function routeData() {
 
 	// const dummy = createRouteData(getDummy);
 
-	return { data };
+	return { cart };
 }
 
 export default function MainLayout() {
-	const { data } = useRouteData<typeof routeData>();
+	const { cart } = useRouteData<typeof routeData>();
 	const isRouting = useIsRouting();
 	const navMenu = [
 		{ title: "All", path: "/search" },
@@ -127,7 +127,7 @@ export default function MainLayout() {
 					</div>
 					<div class="flex justify-end md:w-1/3">
 						<Suspense fallback={<OpenCart />}>
-							<Show when={data()}>{(cart) => <CartModal cart={cart()} />}</Show>
+							<Show when={cart()}>{(cart) => <CartModal cart={cart()} />}</Show>
 						</Suspense>
 					</div>
 				</div>
