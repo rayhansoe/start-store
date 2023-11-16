@@ -77,7 +77,7 @@ export function routeData() {
 	// 	}
 	// );
 	const data = createRouteData(
-		 () => fetch('https://start-store.vercel.app/api/getProducts') as unknown as  Promise<Product[]>,
+		 async () => (await fetch('https://start-store.vercel.app/api/getProducts')).json() as  Promise<Product[]>,
 		{
 			deferStream: false,
 		}
