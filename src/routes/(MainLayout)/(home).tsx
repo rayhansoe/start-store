@@ -37,11 +37,11 @@ const getData = server$(async () => {
 		}
 
 		return json(homepageItems, {
-			headers: new Headers({
+			headers: {
 				"Cache-Control": "max-age=15, stale-while-revalidate",
 				"CDN-Cache-Control": "max-age=15, stale-while-revalidate",
 				"Vercel-CDN-Cache-Control": "max-age=15, stale-while-revalidate",
-			}),
+			},
 		});
 	} catch (error) {
 		throw new Error("Data not available");
