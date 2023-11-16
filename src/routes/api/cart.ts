@@ -23,7 +23,9 @@ export async function GET({request}: APIEvent) {
       return json({cart}, {
         headers: new Headers({
           "set-cookie": `cartId=${cart?.id}; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`,
-          "Cache-Control": "public, max-age=60, s-maxage=60",
+          "Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "Vercel-CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
         })
       });
     }
@@ -36,7 +38,9 @@ export async function GET({request}: APIEvent) {
       return json({cart}, {
         headers: new Headers({
           "set-cookie": `cartId=${cart?.id}; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`,
-          "Cache-Control": "public, max-age=60, s-maxage=60",
+          "Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "Vercel-CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
         }),
       });
     }
@@ -50,7 +54,9 @@ export async function GET({request}: APIEvent) {
     return json({cart}, {
       headers: new Headers({
           "set-cookie": `cartId=${cart?.id}; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`,
-          "Cache-Control": "public, max-age=60, s-maxage=60",
+          "Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "Vercel-CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
         })
     });
   }
@@ -61,7 +67,9 @@ export async function GET({request}: APIEvent) {
     return json({cart}, {
       headers: new Headers({
           "set-cookie": `cartId=${cart?.id}; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`,
-          "Cache-Control": "public, max-age=60, s-maxage=60",
+          "Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
+          "Vercel-CDN-Cache-Control": "max-age=1, s-maxage=2, stale-while-revalidate",
         })
     });
   }
