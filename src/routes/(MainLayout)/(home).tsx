@@ -76,18 +76,18 @@ export function routeData() {
 	// 		deferStream: false,
 	// 	}
 	// );
-	const data = createRouteData(
+	const products = createRouteData(
 		 async () => (await fetch('https://start-store.vercel.app/api/getProducts')).json() as  Promise<Product[]>,
 		{
-			deferStream: false,
+			deferStream: true,
 		}
 	);
 
-	return data;
+	return products;
 }
 
 export default function Page() {
-	const data = useRouteData<typeof routeData>();
+	const products = useRouteData<typeof routeData>();
 	return (
 		<main>
 			<Suspense
@@ -98,7 +98,7 @@ export default function Page() {
 					</>
 				}
 			>
-				<Show when={data()}>
+				<Show when={products()}>
 					{(products) => (
 						<>
 							<ThreeItemGrid
