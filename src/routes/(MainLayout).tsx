@@ -17,7 +17,6 @@ import Search from "~/components/layout/navbar/search";
 import { Suspense } from "~/components/solid/Suspense";
 import { createCart, getCart } from "~/lib/shopify";
 import { getCookieObject } from "~/utils/cookie";
-import { CartProvider } from "~/context/CartContext";
 import { Cart } from "~/lib/shopify/types";
 
 export function routeData() {
@@ -91,7 +90,7 @@ export default function MainLayout() {
 
 	return (
 		<>
-			<CartProvider>
+			{/* <CartProvider> */}
 				<nav class="relative flex items-center justify-between p-4 lg:px-6">
 					<div class="block flex-none md:hidden">
 						<MobileMenu menu={navMenu} />
@@ -141,7 +140,7 @@ export default function MainLayout() {
 				</Suspense>
 				{/* </SuspenseList> */}
 				<Footer />
-			</CartProvider>
+			{/* </CartProvider> */}
 		</>
 	);
 }
