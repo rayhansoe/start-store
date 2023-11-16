@@ -1,30 +1,73 @@
-import { Show, createMemo } from "solid-js";
+import { Show, createEffect, createMemo, createResource } from "solid-js";
 import { createRouteData, useRouteData } from "solid-start";
-import server$, { createServerData$ } from "solid-start/server";
+import server$, {
+	createServerData$,
+	json,
+	useRequest,
+} from "solid-start/server";
 import { Carousel } from "~/components/carousel";
 import { CarouselLoading } from "~/components/carousel-loading";
 import { ThreeItemGridLoading } from "~/components/grid/loading";
 import { ThreeItemGrid } from "~/components/grid/three-items";
 import { Suspense } from "~/components/solid/Suspense";
 import { getCollectionProducts } from "~/lib/shopify";
+import { Product } from "~/lib/shopify/types";
+
+const getData = server$(async () => {
+	const request = useRequest();
+	try {
+		const homepageItems = await getCollectionProducts({
+			collection: "automated-collection",
+		});
+
+		if (request.responseHeaders) {
+			// Sets headers during page render (ssr)
+			request.responseHeaders.append(
+				"Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+		}
+
+		return json(homepageItems, {
+			headers: {
+				"Cache-Control": "max-age=15, stale-while-revalidate",
+			},
+		});
+	} catch (error) {
+		throw new Error("Data not available");
+	}
+});
 
 export function routeData() {
-	// console.log('outside server function, route level', Date.now());
-	const data = createServerData$(
-		() => {
-			// console.log('inside server function, route level', Date.now());
+	// const data = createServerData$(
+	// 	() => {
+	// 		const request = useRequest();
+	// 		try {
+	// 			const homepageItems = getCollectionProducts({
+	// 				collection: "automated-collection",
+	// 			});
 
-			try {
-				const homepageItems = getCollectionProducts({
-					collection: "automated-collection",
-				});
-				// console.log(homepageItems);
-				// console.log('inside server function, route level', Date.now());
-				return homepageItems;
-			} catch (error) {
-				throw new Error("Data not available");
-			}
-		},
+	// 			if (request.responseHeaders) {
+	// 				// Sets headers during page render (ssr)
+	// 				request.responseHeaders.append('Cache-Control', 'max-age=1, stale-while-revalidate');
+	// 			}
+
+	// 			return json('homepageItems', {
+	// 				headers: {
+	// 					'Cache-Control': 'max-age=1, stale-while-revalidate'
+	// 				}
+	// 			});
+
+	// 		} catch (error) {
+	// 			throw new Error("Data not available");
+	// 		}
+	// 	},
+	// 	{
+	// 		deferStream: false,
+	// 	}
+	// );
+	const data = createRouteData(
+		async () => (await getData()).json(),
 		{
 			deferStream: false,
 		}
