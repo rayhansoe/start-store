@@ -26,12 +26,22 @@ const getData = server$(async () => {
 				"Cache-Control",
 				"max-age=15, stale-while-revalidate"
 			);
+			request.responseHeaders.set(
+				"CDN-Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+			request.responseHeaders.set(
+				"Vercel-CDN-Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
 		}
 
 		return json(homepageItems, {
-			headers: {
+			headers: new Headers({
 				"Cache-Control": "max-age=15, stale-while-revalidate",
-			},
+				"CDN-Cache-Control": "max-age=15, stale-while-revalidate",
+				"Vercel-CDN-Cache-Control": "max-age=15, stale-while-revalidate",
+			}),
 		});
 	} catch (error) {
 		throw new Error("Data not available");
