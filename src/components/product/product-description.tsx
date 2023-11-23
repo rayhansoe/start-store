@@ -2,7 +2,6 @@ import { VariantSelector } from "./variant-selector";
 import Price from "../price";
 import Prose from "../prose";
 import { Show } from "solid-js";
-import type { Data } from "~/lib/data";
 import AddToCart from "./AddToCart";
 import { Product } from "~/lib/shopify/types";
 
@@ -35,7 +34,7 @@ export function ProductDescription(props: {
 					html={props.product.descriptionHtml}
 				/>
 			</Show>
-			<AddToCart variants={props.product.variants} availableForSale={props.product.availableForSale} />
+			<AddToCart variants={props.product.variants} availableForSale={props.product.availableForSale} product={props.product} />
 			{/* <AddToCart variants={props.product.variants} availableForSale={props.product.availableForSale} /> */}
 		</>
 	);
