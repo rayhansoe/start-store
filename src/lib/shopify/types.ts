@@ -29,6 +29,21 @@ export type CartItem = {
   };
 };
 
+export type Item = {
+  productId: string;
+  variantId: string;
+  title: string;
+  variantTitle: string;
+  imageUrl: string;
+  imageAlt: string;
+  amount: string;
+  quantity: number;
+  currencyCode: string;
+  merchandiseUrl: string;
+};
+
+export type TypeButton = "plus" | "minus";
+
 export type Collection = ShopifyCollection & {
   path: string;
 };
