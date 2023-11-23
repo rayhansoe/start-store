@@ -16,7 +16,7 @@ export function Carousel(props: { products: Product[] }) {
 
 	return (
 		<Show when={props.products.length}>
-			<div class=" w-full overflow-x-auto pb-6 pt-1">
+			<div class=" w-full overflow-x-auto pb-4 pt-1">
 				<ul class="flex animate-carousel gap-4">
 					<For each={carouselProducts()}>
 						{(product) => (

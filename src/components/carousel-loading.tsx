@@ -5,7 +5,7 @@ import { For } from "solid-js";
 
 export function CarouselLoading() {
 	return (
-		<div class=" w-full overflow-x-auto pb-6 pt-1">
+		<div class=" w-full overflow-x-auto pb-4 pt-1">
 			<ul class="flex gap-4">
 				<For each={Array(4).fill(0)}>
 					{() => (
