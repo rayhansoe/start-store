@@ -1,10 +1,11 @@
 import { A, refetchRouteData } from "solid-start";
 import { GridTileImage } from "../grid/tile";
 import { createServerData$ } from "solid-start/server";
-import { For, Show, createMemo, createSignal, onMount } from "solid-js";
+import { For, Show, createMemo, createResource, createSignal, onMount } from "solid-js";
 import { Suspense } from "../solid/Suspense";
 import { Product } from "~/lib/shopify/types";
 import { getProductRecommendations } from "~/lib/shopify";
+import { API_URL } from "~/lib/utils";
 
 export function RelatedProducts(props: {
 	id: string;
@@ -14,27 +15,9 @@ export function RelatedProducts(props: {
 
 	const productId = createMemo(() => (id() === "" ? id() : props.id));
 
-	const relatedProducts = createServerData$(
-		async (id) => {
-			try {
-				const relatedProducts = getProductRecommendations(id);
-				return relatedProducts;
-			} catch (error) {
-				throw new Error("Data not available");
-			}
-		},
-		{
-			key: () => productId(),
-			initialValue: undefined,
-			ssrLoadFrom: "initial",
-		}
+	const [relatedProducts] = createResource(() => props.id,
+		async (id) => (await fetch(`${API_URL}/api/products/related?productId=${id}`)).json() as  Promise<Product[]>
 	);
-
-	onMount(() => {
-		if (productId() === "") {
-			setId(props.id);
-		}
-	});
 
 	return (
 		<Suspense
@@ -78,7 +61,7 @@ export function RelatedProducts(props: {
 					<>
 						<div class="py-8">
 							<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
-							<ul class="flex w-full gap-4 overflow-x-auto pt-1">
+							<ul class="flex w-full gap-4 overflow-x-auto pt-1 pb-2">
 								{relatedProducts().map((product) => (
 									<li class="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5">
 										<A class="relative h-full w-full" href={`/product/${product.handle}`}>
