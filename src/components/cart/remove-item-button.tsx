@@ -4,8 +4,8 @@ import clsx from "clsx";
 import LoadingDots from "../loading-dots";
 import { Icon } from "solid-heroicons";
 import { xMark } from "solid-heroicons/outline";
-import { CartItem } from "~/lib/shopify/types";
 import { useCartActionContext } from "~/context/CartActionContext";
+import { useLocation } from "solid-start";
 
 function SubmitButton(props: { pending: boolean; optimistic?: boolean }) {
 	return (
@@ -40,10 +40,15 @@ export function DeleteItemButton(props: {
 	optimistic?: boolean;
 }) {
 	const { removeCartItemFn } = useCartActionContext();
+	
+	const location = useLocation()
+	const pathname = () => location.pathname + location.search
+
 	return (
 		<removeCartItemFn.Form>
 			<SubmitButton pending={false} optimistic={props.optimistic} />
 			<input type="hidden" name="itemId" value={props.itemId} />
+			<input type="hidden" name="pathname" value={pathname()} />
 			<p aria-live="polite" class="sr-only" role="status"></p>
 		</removeCartItemFn.Form>
 	);
