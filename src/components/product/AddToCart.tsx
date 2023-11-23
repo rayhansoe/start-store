@@ -3,23 +3,19 @@
 import clsx from "clsx";
 import { Icon } from "solid-heroicons";
 import { plusCircle } from "solid-heroicons/outline";
-import { createEffect, createMemo } from "solid-js";
+import { createMemo } from "solid-js";
 import { useLocation, useSearchParams } from "solid-start";
-import {
-	createServerAction$,
-	createServerMultiAction$,
-	redirect,
-} from "solid-start/server";
-import { Cart, ProductVariant } from "~/lib/shopify/types";
+import { createServerAction$, redirect } from "solid-start/server";
+import { Product, ProductVariant } from "~/lib/shopify/types";
 import LoadingDots from "../loading-dots";
-import { addToCart, createCart, getCart } from "~/lib/shopify";
-import { getCookieObject } from "~/utils/cookie";
-import { createUrl } from "~/lib/utils";
+import { useCartActionContext } from "~/context/CartActionContext";
+import CartModalContext from "~/context/CartModalContext";
 
 const status =
 	import.meta.env.START_ISLANDS_ROUTER && !import.meta.env.SSR ? false : true;
 
 function AddToCartIslands(props: {
+	product: Product;
 	variants: ProductVariant[];
 	availableForSale: boolean;
 }) {
@@ -38,75 +34,67 @@ function AddToCartIslands(props: {
 		!props.availableForSale
 			? "Out of stock"
 			: !selectedVariantId
-			? "Please select options"
-			: undefined;
-			
+			  ? "Please select options"
+			  : undefined;
+
 	const location = useLocation();
 
-	const [adding, { Form }] = createServerMultiAction$(
-		async (form: FormData, { request }) => {
-			const id = form.get("selectedVariantId");
-			const pathname = form.get("pathname") as string;
-			if (typeof id !== "string") {
-				return;
-			}
-			let cartId = getCookieObject(request.headers.get("Cookie") || "")?.cartId;
-			let cart: Cart | undefined;
+	const { addToCartSubmission, addToCartFn } = useCartActionContext();
+	const { setIsCartOpen } = CartModalContext;
 
-			if (cartId) {
-				cart = await getCart(cartId);
-			}
-
-			if (!cartId || !cart) {
-				cart = await createCart();
-				cartId = cart.id;
-			}
-
-			if (!id) {
-				return "Missing product variant ID";
-			}
-
-			try {
-				const cartCookie = `cartId=${cart?.id}; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`;
-
-				await addToCart(cartId, [{ merchandiseId: id, quantity: 1 }]);
-				return redirect(createUrl(pathname, new URLSearchParams({cart: 'true'})), {
-					headers: new Headers({
-						"set-cookie": cartCookie,
-					}),
-				});
-			} catch (e) {
-				return "Error adding item to cart";
-			}
-		}
-	);
-
+	const pathname = () => location.pathname + location.search;
 
 	return (
 		<>
-			<Form>
-				<input type="hidden" name="selectedVariantId" value={selectedVariantId()} />
-				<input type="hidden" name="pathname" value={location.pathname} />
+			<addToCartFn.Form>
+				<input type="hidden" name="variantId" value={selectedVariantId()} />
+				<input type="hidden" name="pathname" value={pathname()} />
+
+				<input type="hidden" name="handle" value={props.product.handle} />
+				<input type="hidden" name="productId" value={props.product.id} />
+				<input type="hidden" name="title" value={props.product.title} />
+
+				{variant()?.title ? (
+					<input type="hidden" name="variantTitle" value={variant()!.title} />
+				) : null}
+
+				<input
+					type="hidden"
+					name="imageUrl"
+					value={props.product.featuredImage.url}
+				/>
+				<input
+					type="hidden"
+					name="amount"
+					value={props.product?.priceRange?.maxVariantPrice?.amount}
+				/>
+				<input
+					type="hidden"
+					name="currencyCode"
+					value={props.product?.priceRange?.maxVariantPrice?.currencyCode}
+				/>
+
 				<button
 					type="submit"
 					aria-label="Add item to cart"
 					disabled={
-						Boolean(adding.pending.length) ||
+						addToCartSubmission.pending ||
 						!props.availableForSale ||
 						!selectedVariantId()
 					}
 					title={title()}
+					onClick={() => setIsCartOpen(true)}
 					class={clsx(
 						"relative flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide text-white hover:opacity-90",
 						{
 							"cursor-not-allowed opacity-60 hover:opacity-60":
 								!props.availableForSale || !selectedVariantId(),
-							"cursor-not-allowed": Boolean(adding.pending.length),
+							"cursor-not-allowed": addToCartSubmission.pending,
 						}
 					)}
 				>
 					<div class="absolute left-0 ml-4">
-						{!Boolean(adding.pending.length) ? (
+						{!addToCartSubmission.pending ? (
 							<Icon path={plusCircle} class="h-5" />
 						) : (
 							<LoadingDots class="mb-3 bg-white" />
@@ -114,7 +102,7 @@ function AddToCartIslands(props: {
 					</div>
 					<span>{props.availableForSale ? "Add To Cart" : "Out Of Stock"}</span>
 				</button>
-			</Form>
+			</addToCartFn.Form>
 		</>
 	);
 }
@@ -132,8 +120,6 @@ function AddToCartBase() {
 		}
 		await sleep(2000);
 		return redirect("/");
-	}, {
-		invalidate: 'cart'
 	});
 
 	//    console.log(status);
