@@ -1,14 +1,21 @@
 import { Show } from "solid-js";
-import { Outlet, Title, useRouteData } from "solid-start";
+import { Outlet, Title, createRouteData, useRouteData } from "solid-start";
 import { createServerData$ } from "solid-start/server";
 import FilterList from "~/components/layout/search/filter";
 import Loading from "~/components/layout/search/filter/loading";
 import { Suspense } from "~/components/solid/Suspense";
 import { sorting } from "~/lib/constants";
-import { getCollections } from "~/lib/shopify";
+import { Collection } from "~/lib/shopify/types";
+import { API_URL } from "~/lib/utils";
 
 export function routeData() {
-	return createServerData$(async () => await getCollections());
+	const collections = createRouteData(
+		async () =>
+			(await fetch(`${API_URL}/api/search/collections`)).json() as Promise<
+				Collection[]
+			>
+	);
+	return collections
 }
 
 export default function SearchLayout() {

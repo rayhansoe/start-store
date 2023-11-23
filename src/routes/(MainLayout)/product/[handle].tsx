@@ -1,64 +1,30 @@
 import { For, Show } from "solid-js";
 import {
-	ErrorBoundary,
-	Meta,
 	RouteDataArgs,
-	Title,
 	createRouteData,
 	useRouteData,
 	useSearchParams,
 } from "solid-start";
-import server$, { createServerData$ } from "solid-start/server";
-import { CarouselLoading } from "~/components/carousel-loading";
 import { GalleryWrapper } from "~/components/product/GalleryWrapper";
 import ProductImage from "~/components/product/Image";
 import { RelatedProducts } from "~/components/product/RelatedProducts";
-import { Gallery } from "~/components/product/gallery";
 import ImageSelector from "~/components/product/image-selector";
 import { ProductDescription } from "~/components/product/product-description";
 import { Suspense } from "~/components/solid/Suspense";
-import { getProduct, getProductRecommendations } from "~/lib/shopify";
-import { Image } from "~/lib/shopify/types";
+import { Image, Product } from "~/lib/shopify/types";
+import { API_URL } from "~/lib/utils";
 
 export function routeData({ params }: RouteDataArgs) {
 	// console.log("outside server function, route level", Date.now());
-	const product = createServerData$(
-		([handle]) => {
-			// console.log("inside server function, route level", Date.now());
-			// console.log("handle: ", handle);
-
-			try {
-				const product = getProduct(handle);
-				return product;
-			} catch (error) {
-				throw new Error("Data not available");
-			}
-		},
+	const product = createRouteData(
+		async ([handle]) =>
+			(
+				await fetch(`${API_URL}/api/products/${handle}`)
+			).json() as Promise<Product>,
 		{
-			deferStream: false,
-			key: () => [params?.handle],
+			key: () => [params.handle],
 		}
 	);
-
-	// const relatedProducts = createServerData$(
-	// 	async ([handle]) => {
-	// 		// console.log("inside server function, route level", Date.now());
-	// 		// console.log("handle: ", handle);
-
-	// 		try {
-	// 			const product = await getProduct(handle);
-	// 			const relatedProducts = getProductRecommendations(product.id);
-	// 			return relatedProducts;
-	// 		} catch (error) {
-	// 			throw new Error("Data not available");
-	// 		}
-	// 	},
-	// 	{
-	// 		deferStream: false,
-	// 		key: () => [params?.handle],
-	// 		ssrLoadFrom: "initial",
-	// 	}
-	// );
 
 	return { product };
 }
