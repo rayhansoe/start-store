@@ -1,33 +1,22 @@
-import { A, refetchRouteData } from "solid-start";
+import { A } from "solid-start";
 import { GridTileImage } from "../grid/tile";
-import { HttpHeader, createServerData$ } from "solid-start/server";
-import {
-	For,
-	Show,
-	createMemo,
-	createResource,
-	createSignal,
-	onMount,
-} from "solid-js";
+import { HttpHeader } from "solid-start/server";
+import { For, Show, createResource } from "solid-js";
 import { Suspense } from "../solid/Suspense";
 import { Product } from "~/lib/shopify/types";
-import { getProductRecommendations } from "~/lib/shopify";
 import { API_URL } from "~/lib/utils";
 
 export function RelatedProducts(props: {
-	id: string;
+	id?: string;
+	handle?: string;
 	relatedProducts?: Product[];
 }) {
-	const [id, setId] = createSignal("");
-
-	const productId = createMemo(() => (id() === "" ? id() : props.id));
-
 	const [relatedProducts] = createResource(
-		() => props.id,
-		async (id) =>
-			(
-				await fetch(`${API_URL}/api/products/related?productId=${id}`)
-			).json() as Promise<Product[]>,
+		() => props.handle,
+		async (handle) =>
+			(await fetch(`${API_URL}/api/products/${handle}/related`)).json() as Promise<
+				Product[]
+			>,
 		{
 			deferStream: true,
 		}
