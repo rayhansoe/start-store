@@ -40,23 +40,6 @@ export default function ProductPage() {
 	return (
 		<>
 			<main>
-				<Title>{product()?.seo?.title || product()?.title}</Title>
-				<Meta
-					name="description"
-					content={product()?.seo?.description || product()?.description}
-				/>
-				<HttpHeader
-					name="Cache-Control"
-					value="max-age=15, stale-while-revalidate"
-				/>
-				<HttpHeader
-					name="CDN-Cache-Control"
-					value="max-age=15, stale-while-revalidate"
-				/>
-				<HttpHeader
-					name="Vercel-CDN-Cache-Control"
-					value="max-age=15, stale-while-revalidate"
-				/>
 				<div class="mx-auto max-w-screen-2xl px-4">
 					<Suspense
 						fallback={
@@ -94,6 +77,23 @@ export default function ProductPage() {
 										name="description"
 										content={product().seo.description || product().description}
 									/> */}
+									<Title>{product()?.seo?.title || product()?.title}</Title>
+									<Meta
+										name="description"
+										content={product()?.seo?.description || product()?.description}
+									/>
+									<HttpHeader
+										name="Cache-Control"
+										value="max-age=15, stale-while-revalidate"
+									/>
+									<HttpHeader
+										name="CDN-Cache-Control"
+										value="max-age=15, stale-while-revalidate"
+									/>
+									<HttpHeader
+										name="Vercel-CDN-Cache-Control"
+										value="max-age=15, stale-while-revalidate"
+									/>
 									<div class="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12 lg:flex-row">
 										<div class="h-full w-full basis-full lg:basis-4/6">
 											<GalleryWrapper
