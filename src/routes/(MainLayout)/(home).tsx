@@ -25,6 +25,18 @@ export default function Page() {
 	const products = useRouteData<typeof routeData>();
 	return (
 		<main>
+			<HttpHeader
+				name="Cache-Control"
+				value="max-age=15, stale-while-revalidate"
+			/>
+			<HttpHeader
+				name="CDN-Cache-Control"
+				value="max-age=15, stale-while-revalidate"
+			/>
+			<HttpHeader
+				name="Vercel-CDN-Cache-Control"
+				value="max-age=15, stale-while-revalidate"
+			/>
 			<Suspense
 				fallback={
 					<>
@@ -36,18 +48,6 @@ export default function Page() {
 				<Show when={products()}>
 					{(products) => (
 						<>
-							<HttpHeader
-								name="Cache-Control"
-								value="max-age=15, stale-while-revalidate"
-							/>
-							<HttpHeader
-								name="CDN-Cache-Control"
-								value="max-age=15, stale-while-revalidate"
-							/>
-							<HttpHeader
-								name="Vercel-CDN-Cache-Control"
-								value="max-age=15, stale-while-revalidate"
-							/>
 							<ThreeItemGrid
 								firstProduct={products()[0]}
 								secondProduct={products()[1]}
