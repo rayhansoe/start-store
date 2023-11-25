@@ -78,10 +78,6 @@ export default function ProductPage() {
 										content={product().seo.description || product().description}
 									/> */}
 									<Title>{product()?.seo?.title || product()?.title}</Title>
-									<Meta
-										name="description"
-										content={product()?.seo?.description || product()?.description}
-									/>
 									<HttpHeader
 										name="Cache-Control"
 										value="max-age=15, stale-while-revalidate"
