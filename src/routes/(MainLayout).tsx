@@ -55,8 +55,7 @@ export function routeData() {
 			}
 		},
 		{
-			key: () => "cart",
-			deferStream: true
+			key: () => "cart"
 		}
 	);
 
