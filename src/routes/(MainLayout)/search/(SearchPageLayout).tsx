@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
 import { Outlet, Title, createRouteData, useRouteData } from "solid-start";
-import { createServerData$ } from "solid-start/server";
+import { HttpHeader, createServerData$ } from "solid-start/server";
 import FilterList from "~/components/layout/search/filter";
 import Loading from "~/components/layout/search/filter/loading";
 import { Suspense } from "~/components/solid/Suspense";
@@ -13,9 +13,12 @@ export function routeData() {
 		async () =>
 			(await fetch(`${API_URL}/api/search/collections`)).json() as Promise<
 				Collection[]
-			>
+			>,
+		{
+			deferStream: true,
+		}
 	);
-	return collections
+	return collections;
 }
 
 export default function SearchLayout() {
@@ -23,6 +26,19 @@ export default function SearchLayout() {
 	return (
 		<>
 			<Title>Search | Start Store</Title>
+
+			<HttpHeader
+				name="Cache-Control"
+				value="max-age=15, stale-while-revalidate"
+			/>
+			<HttpHeader
+				name="CDN-Cache-Control"
+				value="max-age=15, stale-while-revalidate"
+			/>
+			<HttpHeader
+				name="Vercel-CDN-Cache-Control"
+				value="max-age=15, stale-while-revalidate"
+			/>
 			<div class="mx-auto flex max-w-screen-2xl flex-col gap-8 px-4 pb-4 text-black dark:text-white md:flex-row">
 				<div class="order-first w-full flex-none md:max-w-[125px]">
 					<Suspense fallback={<Loading />}>

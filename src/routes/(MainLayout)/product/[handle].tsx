@@ -1,10 +1,13 @@
 import { For, Show } from "solid-js";
 import {
+	Meta,
 	RouteDataArgs,
+	Title,
 	createRouteData,
 	useRouteData,
 	useSearchParams,
 } from "solid-start";
+import { HttpHeader } from "solid-start/server";
 import { GalleryWrapper } from "~/components/product/GalleryWrapper";
 import ProductImage from "~/components/product/Image";
 import { RelatedProducts } from "~/components/product/RelatedProducts";
@@ -23,6 +26,7 @@ export function routeData({ params }: RouteDataArgs) {
 			).json() as Promise<Product>,
 		{
 			key: () => [params.handle],
+			deferStream: true,
 		}
 	);
 
@@ -36,6 +40,23 @@ export default function ProductPage() {
 	return (
 		<>
 			<main>
+				<Title>{product()?.seo?.title || product()?.title}</Title>
+				<Meta
+					name="description"
+					content={product()?.seo?.description || product()?.description}
+				/>
+				<HttpHeader
+					name="Cache-Control"
+					value="max-age=15, stale-while-revalidate"
+				/>
+				<HttpHeader
+					name="CDN-Cache-Control"
+					value="max-age=15, stale-while-revalidate"
+				/>
+				<HttpHeader
+					name="Vercel-CDN-Cache-Control"
+					value="max-age=15, stale-while-revalidate"
+				/>
 				<div class="mx-auto max-w-screen-2xl px-4">
 					<Suspense
 						fallback={

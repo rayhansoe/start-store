@@ -13,7 +13,7 @@ export function CartWrapper(props: { children: JSX.Element }) {
 
 	return (
 		<>
-			<div class="flex flex-col h-full" ref={parent}>{props.children}</div>
+			<div class="flex flex-col h-full flex-grow flex-shrink-0 basis-0" ref={parent}>{props.children}</div>
 		</>
 	);
 }
