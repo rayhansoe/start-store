@@ -62,7 +62,7 @@ export function routeData() {
 			return res;
 		},
 		{
-			deferStream: false,
+			deferStream: true,
 		}
 	);
 
