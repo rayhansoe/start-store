@@ -7,50 +7,127 @@ import {
 	useRouteData,
 	useSearchParams,
 } from "solid-start";
-import { HttpHeader } from "solid-start/server";
+import server$, { HttpHeader, json, useRequest } from "solid-start/server";
 import { GridTileImage } from "~/components/grid/tile";
 import { GalleryWrapper } from "~/components/product/GalleryWrapper";
 import ProductImage from "~/components/product/Image";
 import ImageSelector from "~/components/product/image-selector";
 import { ProductDescription } from "~/components/product/product-description";
 import { Suspense } from "~/components/solid/Suspense";
+import { productByHandleFetcher, relatedProductsByHandleFetcher } from "~/lib/rpc/products";
+import { getProduct, getProductRecommendations } from "~/lib/shopify";
 import { Image, Product } from "~/lib/shopify/types";
 import { API_URL } from "~/lib/utils";
 
+const product = server$(async (handle: string) => {
+	try {
+		const event = useRequest();
+		const res = await fetch(`${API_URL}/api/products/${handle}`);
+		const product = (await res.json()) as Product;
+		// const product = await getProduct(handle)
+
+		if (event.responseHeaders) {
+			event.responseHeaders.set(
+				"Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+			event.responseHeaders.set(
+				"CDN-Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+			event.responseHeaders.set(
+				"Vercel-CDN-Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+		}
+
+		return json(product, {
+			headers: new Headers({
+				"Cache-Control": "max-age=15, stale-while-revalidate",
+				"CDN-Cache-Control": "max-age=15, stale-while-revalidate",
+				"Vercel-CDN-Cache-Control": "max-age=15, stale-while-revalidate",
+			}),
+		});
+	} catch (error) {
+		throw new Error("Data not available");
+	}
+});
+
+const relatedProducts = server$(async (handle: string) => {
+	try {
+		const event = useRequest();
+		const res = await fetch(`${API_URL}/api/products/${handle}`);
+		const product = (await res.json()) as Product;
+
+		const products = await getProductRecommendations(product.id);
+
+		if (event.responseHeaders) {
+			event.responseHeaders.set(
+				"Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+			event.responseHeaders.set(
+				"CDN-Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+			event.responseHeaders.set(
+				"Vercel-CDN-Cache-Control",
+				"max-age=15, stale-while-revalidate"
+			);
+		}
+
+		return json(products, {
+			headers: new Headers({
+				"Cache-Control": "max-age=15, stale-while-revalidate",
+				"CDN-Cache-Control": "max-age=15, stale-while-revalidate",
+				"Vercel-CDN-Cache-Control": "max-age=15, stale-while-revalidate",
+			}),
+		});
+	} catch (error) {
+		throw new Error("Data not available");
+	}
+});
+
 export function routeData({ params }: RouteDataArgs) {
-	// console.log("outside server function, route level", Date.now());
-	const product = createRouteData(
-		async ([handle]) =>
-			(
-				await fetch(`${API_URL}/api/products/${handle}`)
-			).json() as Promise<Product>,
+	const getProduct = createRouteData<Product, string[]>(
+		async ([handle]) => {
+			const res = (await productByHandleFetcher(handle)) as Response | Product;
+			if (res instanceof Response) {
+				return await res.json();
+			}
+			return res;
+		},
 		{
-			key: () => [params.handle],
 			deferStream: true,
-		}
-	);
-
-	const relatedProducts = createRouteData(
-		async ([handle]) =>
-			(await fetch(`${API_URL}/api/products/${handle}/related`)).json() as Promise<
-				Product[]
-			>,
-		{
 			key: () => [params.handle],
 		}
 	);
 
-	return { product, relatedProducts };
+	const getRelatedProducts = createRouteData(
+		async ([handle]) => {
+			const res = (await relatedProductsByHandleFetcher(handle)) as Response | Product[];
+			if (res instanceof Response) {
+				return await res.json();
+			}
+			return res;
+		},
+		{
+			deferStream: false,
+			key: () => [params.handle],
+		}
+	);
+
+	return { getProduct, getRelatedProducts };
 }
 
 export default function ProductPage() {
-	const { product, relatedProducts } = useRouteData<typeof routeData>();
+	const { getProduct, getRelatedProducts } = useRouteData<typeof routeData>();
 	const [params] = useSearchParams();
 
 	return (
 		<>
 			<main>
-				<Title>{product()?.seo?.title || product()?.title}</Title>
+				<Title>{getProduct()?.seo?.title || getProduct()?.title}</Title>
 				<HttpHeader
 					name="Cache-Control"
 					value="max-age=15, stale-while-revalidate"
@@ -90,11 +167,11 @@ export default function ProductPage() {
 							</>
 						}
 					>
-						<Show when={product()}>
+						<Show when={getProduct()}>
 							{(product) => (
 								<>
 									{/* <Title>
-										{(product().seo.title || product().title) + " | Start Store"}
+										{(getProduct().seo.title || product().title) + " | Start Store"}
 									</Title>
 									<Meta
 										name="description"
@@ -140,7 +217,7 @@ export default function ProductPage() {
 					<Suspense
 						fallback={
 							<div class="py-8">
-								<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
+								<h2 class="mb-4 text-2xl font-bold">Related Products...</h2>
 								<ul class="flex w-full gap-4 overflow-x-auto pt-1">
 									<For each={Array(8).fill(0)}>
 										{() => (
@@ -156,7 +233,7 @@ export default function ProductPage() {
 						}
 					>
 						<Show
-							when={relatedProducts()}
+							when={getRelatedProducts()}
 							fallback={
 								<div class="py-8">
 									<h2 class="mb-4 text-2xl font-bold">Related Products</h2>

@@ -1,5 +1,12 @@
 "use client";
-import { For, Match, Switch, createMemo, createSignal } from "solid-js";
+import {
+	For,
+	Match,
+	Switch,
+	createEffect,
+	createMemo,
+	createSignal,
+} from "solid-js";
 import OpenCart from "./open-cart";
 import { Icon } from "solid-heroicons";
 import { shoppingCart } from "solid-heroicons/outline";
@@ -47,19 +54,16 @@ export default function CartModal(props: { cart: Cart }) {
 		);
 	};
 
-	
 	const updatingItems = () => {
 		return updateItemSubmission.pending.map((item) => ({
 			itemId: item.input.get("itemId") as string,
 			type: item.input.get("type") as TypeButton,
+			newQuantity: item.input.get("quantity") as TypeButton,
 		}));
 	};
 
 	const totalQuantity = createMemo(() => {
-		
-		const [newQuantity, setNewQuantity] = createSignal(
-			props.cart?.totalQuantity
-		);
+		const [newQuantity, setNewQuantity] = createSignal(props.cart?.totalQuantity);
 		if (updatingItems().length) {
 			updatingItems().forEach((_item) =>
 				_item.type === "plus"
@@ -72,8 +76,6 @@ export default function CartModal(props: { cart: Cart }) {
 		}
 		return newQuantity();
 	});
-
-
 
 	const filterCart = () => {
 		return props.cart.lines.filter((item) => {
@@ -90,7 +92,8 @@ export default function CartModal(props: { cart: Cart }) {
 			!props.cart ||
 			(filterCart().length === 0 &&
 				!isNewDataNotNew() &&
-				!addToCartSubmission.input) || !totalQuantity()
+				!addToCartSubmission.input) ||
+			!totalQuantity()
 		);
 	};
 
@@ -180,21 +183,31 @@ export default function CartModal(props: { cart: Cart }) {
 															const itemUpdates = () =>
 																updatingItems().filter((_item) => _item.itemId === item.id);
 
+															// const quantity = createMemo(() => {
+															// 	const [newQuantity, setNewQuantity] = createSignal(
+															// 		item.quantity
+															// 	);
+															// 	if (itemUpdates().length) {
+															// 		itemUpdates().forEach((_item) =>
+															// 			_item.type === "plus"
+															// 				? setNewQuantity((prev) => prev + 1)
+															// 				: setNewQuantity((prev) => prev - 1)
+															// 		);
+															// 	}
+															// 	if (isDataUpdating()) {
+															// 		setNewQuantity((prev) => prev + 1);
+															// 	}
+															// 	return newQuantity();
+															// });
+
+															const latestUpdate = () =>
+																itemUpdates()[itemUpdates().length - 1];
+
 															const quantity = createMemo(() => {
-																const [newQuantity, setNewQuantity] = createSignal(
-																	item.quantity
-																);
-																if (itemUpdates().length) {
-																	itemUpdates().forEach((_item) =>
-																		_item.type === "plus"
-																			? setNewQuantity((prev) => prev + 1)
-																			: setNewQuantity((prev) => prev - 1)
-																	);
+																if (itemUpdates().length && latestUpdate()?.newQuantity) {
+																	return parseInt(latestUpdate()?.newQuantity);
 																}
-																if (isDataUpdating()) {
-																	setNewQuantity((prev) => prev + 1);
-																}
-																return newQuantity();
+																return item.quantity;
 															});
 
 															const cartItem: () => Item = () => ({
@@ -210,9 +223,28 @@ export default function CartModal(props: { cart: Cart }) {
 																variantTitle: item.merchandise.title,
 															});
 
+															const isShow = createMemo(
+																() =>
+																	!removingItems().includes(item.id) ||
+																	!(quantity() === 0), 0,{
+																		
+																	}
+															);
+
+															createEffect(() => {
+																console.log("product => ", quantity());
+															});
+
+															createEffect(() => {
+																console.log(
+																	"is show =>",
+																	isShow()
+																);
+															});
+
 															return (
 																<Show
-																	when={!removingItems().includes(item.id) && quantity() >= 1}
+																	when={isShow()}
 																>
 																	<CartItem
 																		quantity={quantity()}

@@ -11,23 +11,19 @@ import Grid, { GridItem } from "~/components/grid";
 import ProductGridItems from "~/components/layout/product-grid-items";
 import { Suspense } from "~/components/solid/Suspense";
 import { defaultSort, sorting } from "~/lib/constants";
+import { getSearchData } from "~/lib/rpc/search";
 import { getProducts } from "~/lib/shopify";
 import { Product } from "~/lib/shopify/types";
 import { API_URL, createUrl } from "~/lib/utils";
 
 export function routeData({ params, location }: RouteDataArgs) {
-	const search = createRouteData(
+	const search = createRouteData<Product[], string[]>(
 		async ([sort, q]) => {
-			const params: { sort?: string; q?: string } = {};
-			if (sort) {
-				params.sort = sort;
+			const res = (await getSearchData(sort, q)) as Response | Product[];
+			if (res instanceof Response) {
+				return await res.json();
 			}
-			if (q) {
-				params.q = q;
-			}
-			const searchParams = new URLSearchParams(params);
-			const url = createUrl(`${API_URL}/api/search`, searchParams);
-			return (await fetch(url)).json() as Promise<Product[]>;
+			return res;
 		},
 		{
 			key: () => [location.query["sort"], location.query["q"]],

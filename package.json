@@ -9,7 +9,7 @@
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20.9.4",
+    "@types/node": "^20.10.1",
     "autoprefixer": "^10.4.16",
     "cssnano": "^6.0.1",
     "postcss": "^8.4.31",
@@ -23,7 +23,7 @@
     "@formkit/auto-animate": "0.8.1",
     "@solid-primitives/scheduled": "1.4.1",
     "@solidjs/meta": "^0.29.1",
-    "@solidjs/router": "^0.8.2",
+    "@solidjs/router": "^0.8.4",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
     "solid-headless": "^0.13.1",
@@ -36,5 +36,10 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "solid-start@0.3.10": "patches/solid-start@0.3.10.patch"
+    }
   }
 }

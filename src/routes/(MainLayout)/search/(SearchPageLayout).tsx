@@ -5,15 +5,19 @@ import FilterList from "~/components/layout/search/filter";
 import Loading from "~/components/layout/search/filter/loading";
 import { Suspense } from "~/components/solid/Suspense";
 import { sorting } from "~/lib/constants";
+import { getCollectionsData } from "~/lib/rpc/search";
 import { Collection } from "~/lib/shopify/types";
 import { API_URL } from "~/lib/utils";
 
 export function routeData() {
-	const collections = createRouteData(
-		async () =>
-			(await fetch(`${API_URL}/api/search/collections`)).json() as Promise<
-				Collection[]
-			>,
+	const collections = createRouteData<Collection[], true>(
+		async () => {
+			const res = (await getCollectionsData()) as Response | Collection[];
+			if (res instanceof Response) {
+				return await res.json()
+			}
+			return res;
+		},
 		{
 			deferStream: true,
 		}

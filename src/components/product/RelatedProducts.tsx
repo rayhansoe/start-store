@@ -1,26 +1,20 @@
 import { A } from "solid-start";
 import { GridTileImage } from "../grid/tile";
-import { HttpHeader } from "solid-start/server";
+import { HttpHeader, createServerData$ } from "solid-start/server";
 import { For, Show, createResource } from "solid-js";
 import { Suspense } from "../solid/Suspense";
 import { Product } from "~/lib/shopify/types";
 import { API_URL } from "~/lib/utils";
+import { relatedProductsByHandleFetcher } from "~/lib/rpc/products";
 
 export function RelatedProducts(props: {
 	id?: string;
 	handle?: string;
 	relatedProducts?: Product[];
 }) {
-	const [relatedProducts] = createResource(
-		() => props.handle,
-		async (handle) =>
-			(await fetch(`${API_URL}/api/products/${handle}/related`)).json() as Promise<
-				Product[]
-			>,
-		{
-			deferStream: true,
-		}
-	);
+	
+	const products = createServerData$(async () =>
+	(await relatedProductsByHandleFetcher(props.handle)).json() as Promise<Product[]>)
 
 	return (
 		<>
@@ -55,7 +49,7 @@ export function RelatedProducts(props: {
 				}
 			>
 				<Show
-					when={relatedProducts()}
+					when={products()}
 					fallback={
 						<div class="py-8">
 							<h2 class="mb-4 text-2xl font-bold">Related Products</h2>
